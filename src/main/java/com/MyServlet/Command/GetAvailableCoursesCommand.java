@@ -70,6 +70,7 @@ public class GetAvailableCoursesCommand implements Command{
         for (Course course : courseList) {
             teachersID.add(course.getTeacherID());
         }
+        request.getSession().setAttribute("rowCount", 5);
         request.setAttribute("coursesSelectName", coursesNameList);
         request.setAttribute("courseName", courseName);
         request.setAttribute("teacherData", teacherService.selectTeacherNameAndSurnameByID(teachersID));

@@ -28,7 +28,7 @@
         </li>
         <c:if test="${sessionScope.user == null || sessionScope.user.userRole eq UserRole.STUDENT}">
             <li>
-                <a href="${pageContext.request.contextPath}/Controller?command=initAvailableCourses">Курсы</a>
+                <a href="${pageContext.request.contextPath}/Controller?command=getAvailableCourses">Курсы</a>
                 <hr>
             </li>
         </c:if>

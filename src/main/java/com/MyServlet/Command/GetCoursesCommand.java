@@ -86,6 +86,7 @@ public class GetCoursesCommand implements Command {
             request.setAttribute("teachersID", teachers.get("id"));
             request.setAttribute("marks", courseService.selectAllStudentMarks(coursesID, student.getId()));
         }
+        session.setAttribute("rowCount", 5);
         request.setAttribute("teacherData", teacherService.selectTeacherNameAndSurnameByID(teachersID));
         request.setAttribute("maxPage", (int) Math.ceil((double) courseCount / rowCount));
         request.setAttribute("pageNumber", pageNumber);

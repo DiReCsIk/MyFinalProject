@@ -20,8 +20,6 @@ public class CommandContainer {
         commands.put("getStudentsInfo", new GetStudentsInfoCommand());
         commands.put("getAdministratorsInfo", new GetAdministratorsInfoCommand());
         commands.put("getTeachersInfo", new GetTeachersInfoCommand());
-        commands.put("initAdminUserManage", new InitAdminUserCommand());
-        commands.put("initAdminCourseManage", new InitAdminCourseCommand());
         commands.put("setBanStatus", new SetBanStatusCommand());
         commands.put("riseUserPosition", new RiseUserPositionCommand());
         commands.put("declineUserPosition", new DeclineUserPositionCommand());
@@ -32,10 +30,7 @@ public class CommandContainer {
         commands.put("updateCourseInfo", new UpdateCourseInfoCommand());
         commands.put("createCourse", new CreateCourseCommand());
         commands.put("getTeacherFinishedCourse", new GetTeacherFinishedCoursesCommand());
-        commands.put("initStudentCourses",new InitStudentCoursesCommand());
-        commands.put("initAvailableCourses", new InitAvailableCoursesCommand());
         commands.put("getAvailableCourses", new GetAvailableCoursesCommand());
-        commands.put("initTeacherCourse", new InitTeacherCourseCommand());
         commands.put("setStudentMarkCommand", new SetStudentMarkCommand());
     }
 

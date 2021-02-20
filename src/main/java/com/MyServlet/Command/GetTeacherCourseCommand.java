@@ -46,6 +46,7 @@ public class GetTeacherCourseCommand implements Command {
         Map<String, ArrayList<String>> map = teacherService.selectStudentsDataOnTeacherCourse(teacher.getId(), pageNumber, rowCount);
         int studentsCount = courseService.selectStudentsCountOnCourse(courseID);
         int maxPage = (int) Math.ceil((double) studentsCount / rowCount);
+        session.setAttribute("rowCount", 5);
         request.setAttribute("studentsName", map.get("name"));
         request.setAttribute("studentsSurname", map.get("surName"));
         request.setAttribute("studentsBirthDay", map.get("birthDay"));

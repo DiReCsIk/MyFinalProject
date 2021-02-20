@@ -6,7 +6,6 @@ import java.sql.Date;
 public class Student extends User implements Serializable {
     private String name;
     private String surName;
-    private int averageRating;
     private boolean banStatus;
     private Date birthDate;
     private int userID;
@@ -28,14 +27,6 @@ public class Student extends User implements Serializable {
 
     public void setSurName(String surName) {
         this.surName = surName;
-    }
-
-    public int getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(int averageRating) {
-        this.averageRating = averageRating;
     }
 
     public boolean isBanStatus() {

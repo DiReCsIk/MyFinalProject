@@ -44,6 +44,7 @@ public class GetAdminCoursesCommand implements Command {
         for (Course course : courses) {
             teachersID.add(course.getTeacherID());
         }
+        request.getSession().setAttribute("rowCount", 5);
         request.setAttribute("teacherData", teacherService.selectTeacherNameAndSurnameByID(teachersID));
         request.setAttribute("pageNumber", pageNumber);
         request.setAttribute("courseList", courses);

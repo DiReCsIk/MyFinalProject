@@ -13,20 +13,20 @@
                 <c:choose>
                     <c:when test="${sessionScope.user.userRole.equals(UserRole.ADMINISTRATOR)}">
                         <li>
-                            <a href="${pageContext.request.contextPath}/Controller?command=initAdminUserManage">&bull; Управление пользователями</a><hr>
+                            <a href="${pageContext.request.contextPath}/Controller?command=getStudentsInfo">&bull; Управление пользователями</a><hr>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/Controller?command=initAdminCourseManage">&bull; Управление курсами</a><hr>
+                            <a href="${pageContext.request.contextPath}/Controller?command=getAdminCourses">&bull; Управление курсами</a><hr>
                         </li>
                     </c:when>
                     <c:when test="${sessionScope.user.userRole.equals(UserRole.TEACHER)}">
                         <li>
-                            <a href="${pageContext.request.contextPath}/Controller?command=initTeacherCourse">&bull; Мой курс</a><hr>
+                            <a href="${pageContext.request.contextPath}/Controller?command=getTeacherCourseInfo">&bull; Мой курс</a><hr>
                         </li>
                     </c:when>
                     <c:otherwise>
                         <li>
-                            <a href="${pageContext.request.contextPath}/Controller?command=initStudentCourses">&bull; Мои курсы</a><hr>
+                            <a href="${pageContext.request.contextPath}/Controller?command=getStudentCourses">&bull; Мои курсы</a><hr>
                         </li>
                     </c:otherwise>
                 </c:choose>

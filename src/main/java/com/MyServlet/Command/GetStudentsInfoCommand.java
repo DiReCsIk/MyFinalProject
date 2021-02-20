@@ -41,6 +41,7 @@ public class GetStudentsInfoCommand implements Command{
         LinkedHashMap<String, ArrayList<String>> userData = (LinkedHashMap<String, ArrayList<String>>) userService.getUsersData("STUDENT", pageNumber, rowCount);
         ArrayList<Student> studentDataList = (ArrayList<Student>) studentService.getAllEntitiesByUserID(userData.get("userID"));
         int studentsCount = studentService.getAllStudentsCount();
+        request.getSession().setAttribute("rowCount", 5);
         request.setAttribute("pageNumber", pageNumber);
         request.setAttribute("userData", userData);
         request.setAttribute("dataList", studentDataList);

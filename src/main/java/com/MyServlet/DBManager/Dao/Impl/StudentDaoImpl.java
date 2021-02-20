@@ -82,7 +82,6 @@ public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
         updateByStatement(UPDATE_STUDENT,
                 student.getName(),
                 student.getSurName(),
-                String.valueOf(student.getAverageRating()),
                 student.isBanStatus() ? "1" : "0",
                 String.valueOf(student.getBirthDate()),
                 String.valueOf(student.getId())
@@ -94,7 +93,6 @@ public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
         updateByStatement(INSERT_STUDENT,
                 student.getName(),
                 student.getSurName(),
-                String.valueOf(student.getAverageRating()),
                 student.isBanStatus() ? "1" : "0",
                 String.valueOf(student.getBirthDate()),
                 String.valueOf(student.getUserID())
