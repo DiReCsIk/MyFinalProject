@@ -1,0 +1,74 @@
+.data{
+    display: flex;
+    flex-direction: column;
+}
+.theme {
+    width: auto;
+    height: auto;
+    margin-top: 3%;
+    cursor: default;
+    text-align: center;
+}
+.theme h1 {
+    font-weight: normal;
+    font-family: 'Lucida Bright', cursive;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    line-height: 1;
+    color: #eeeeee;
+    font-size: 40px;
+    padding: .4em 1em .55em;
+}
+.text{
+    color: #eeeeee;
+    margin: 6% 16%;
+    font-family: Comic Sans MS, Comic Sans, cursive;
+    padding: 50px;
+    width: 60%;
+    /*  border: 2px double #4CAF50; !* Чёрная рамка *!*/
+    display: flex;
+    flex-direction: column;
+    border: 5px solid #00adb5;
+     border-top-left-radius: 100% 100px;
+     border-bottom-right-radius: 100% 100px;
+    /*
+    border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+    */
+}
+
+.theme h1:before,
+.theme h1:after {
+    content: "";
+    position: absolute;
+    width: 60%;
+    height: .1em;
+    background-color: #00adb5;
+}
+.theme h1:before {
+    left: 0;
+    top: 0;
+}
+.theme h1:after {
+    right: 0;
+    bottom: 0;
+}
+
+figure{
+    position: absolute;
+    width: 60%;
+    height: 150px;
+    overflow: hidden;
+    margin-left: 20%;
+    margin-top: 5%;
+}
+figure img {
+    width: 100%; /* Ширина изображений */
+    margin: -10% 0 0 0; /* Сдвигаем вверх */
+    border-radius: 50%;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .theme h1 {font-size: 1.5em;}
+}

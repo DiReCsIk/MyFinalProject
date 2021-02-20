@@ -1,0 +1,65 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.MyServlet.Util.UserRole" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../style/Menu.css">
+</head>
+<body>
+<nav id="navigation" class="navigation">
+    <header class="logo">
+        <img src="../image/logo.png" alt="logo"/>
+        <p>DireElective</p>
+    </header>
+    <a href="javascript:void(0)" class="closeButton" onclick="closeNav()">&times;</a>
+    <ul class="list">
+        <c:choose>
+            <c:when test="${sessionScope.user.userRole == null}">
+                <%@include file="../pageFragment/unauthorizedMenu.jspf" %>
+            </c:when>
+            <c:otherwise>
+                <%@include file="../pageFragment/authorizedMenu.jspf" %>
+            </c:otherwise>
+        </c:choose>
+        <li>
+            <a href="../page/main.jsp" style="margin-top: 4rem">Главная страница</a>
+            <hr>
+        </li>
+        <c:if test="${sessionScope.user == null || sessionScope.user.userRole eq UserRole.STUDENT}">
+            <li>
+                <a href="${pageContext.request.contextPath}/Controller?command=initAvailableCourses">Курсы</a>
+                <hr>
+            </li>
+        </c:if>
+        <li>
+            <a href="#">О нас</a>
+            <hr>
+        </li>
+    </ul>
+  <%--  <div class="navigationBottom">
+        <p>
+            <img class="phoneImage" src="../image/telephone.png" alt="telephone">
+            Служба поддержки
+        </p>
+        <p>(+380) 0667620701</p>
+    </div>--%>
+<%--    <div >
+        <img src="../image/faceLogo.png" alt="logo"/>
+
+    </div>--%>
+
+</nav>
+
+<div class="dropDown">
+    <button class="dropButton">Выбор языка</button>
+    <div class="dropDown-content">
+        <a href="#">RU</a>
+        <a href="#">EN</a>
+        <a href="#">UA</a>
+    </div>
+</div>
+<span onclick="openNav()" class="openButton">></span>
+<script src="../script/Menu.js"></script>
+</body>
+</html>

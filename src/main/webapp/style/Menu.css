@@ -1,0 +1,157 @@
+body {
+    background-color: #222831;
+    color: #393e46; /*#5e5e5e;*/
+}
+/*Left menu*/
+.navigation {
+    height: 100%;
+    margin-left: -20%;
+    position: fixed;
+    width: 18%;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #393e46;
+    padding-top: 4%; /* Place content 50px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+.navigation a:hover{
+    transform: scale(0.95);
+}
+.navigation a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    color: #eeeeee;
+    display: block;
+    transition: 0.3s;
+}
+ul li ul li{
+    font-size: 14px;
+    font-weight: normal;
+}
+.list, .navigationBottom{
+    font-size: 18px;
+    font-style: italic;
+    font-weight: bold;
+    margin-left: 0;
+    padding-left: 0;
+}
+.list li {
+    list-style-type: none;
+}
+/*.navigation a:hover {
+    color: #f1f1f1;
+}*/
+.navigation .closeButton {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+.openButton {
+    position: fixed;
+    margin-top: 20%;
+    color: #00adb5;
+    transform: scale(2, 4);
+    font-family: "Arial", sans-serif;
+    font-size: 20px;
+    background: rgba(57, 62, 70, 0.7); /* Цвет фона */
+}
+span:hover {
+    cursor: pointer;
+}
+
+/*Language menu*/
+/* Стилизация выпадающей кнопки */
+.dropButton {
+    z-index: 1;
+    background-color: #00adb5;
+    color: #eeeeee;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+/* Контейнер <div> - необходимо разместить выпадающий контент */
+.dropDown {
+    z-index: 1;
+    position: fixed;
+    right: 8px;
+    flex-direction: column;
+    display: flex;
+}
+
+/* Выпадающий контент (скрыт по умолчанию) */
+.dropDown-content {
+    display: none;
+    position: relative;
+    background-color: #eeeeee;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Ссылки внутри выпадающего */
+.dropDown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Изменить цвет выпадающих ссылок при наведении */
+.dropDown-content a:hover {
+    background-color: #E0E0E0
+}
+
+/* Показать выпадающее меню при наведении */
+.dropDown:hover .dropDown-content {
+    display: block;
+}
+
+/* Изменить цвет фона кнопки выпадающего списка, когда отображается содержимое выпадающего списка. */
+.dropDown:hover .dropButton {
+    background-color: #00898E;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 173, 181, 0), rgba(0, 173, 181, 0.75),
+                        rgba(0, 173, 181, 0));
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .navigation {padding-top: 15px;}
+    .navigation a {font-size: 10px;}
+}
+@media screen and (max-width: 450px) {
+    .navigation a {font-size: 10px;}
+}
+.logo {
+    display: flex;
+    opacity: 0.5;
+}
+.logo img{
+    padding-left: 10%;
+}
+.logo p{
+    padding-left: 6%;
+    line-height: 1px;
+}
+header p{
+    color: #eeeeee;
+    padding-left: 20px;
+    font-size: 24px;
+}
+.navigationBottom{
+    display: flex;
+    flex-direction: column;
+    Color: #eeeeee;
+    opacity: 0.7;
+    text-align: center;
+}
+.phoneImage{
+    width: 1%;
+    height: 1%;
+}

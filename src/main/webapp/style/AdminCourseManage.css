@@ -1,0 +1,128 @@
+body{
+    height: 120%;
+}
+.container {
+    text-align: center;
+    font-size: 24px;
+    position: absolute;
+    margin-left: 6%;
+    margin-right: 8%;
+    line-height: 1.4;
+    background-color: #eeeeee;
+    padding: 1.2rem 1rem 2%;
+    width: 87%;
+    height: 84%;
+    box-shadow: 0 10px 40px -10px white;
+    border-radius: 32px;
+}
+
+table {
+    margin-left: 6%;
+    width: 94%;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 14px;
+    color: #eeeeee;
+    border-spacing: 0;
+    text-align: center;
+}
+tr:last-child td:last-child {
+    border-bottom-right-radius: 20px;
+}
+tr:last-child td:first-child {
+    border-bottom-left-radius: 20px;
+}
+th {
+    background: #00adb5;
+    border-style: solid;
+    border-bottom: #00adb5;
+    border-width: 0 1px 1px 0;
+    text-shadow: 1px 1px 1px #393e46;
+    padding: 10px 20px;
+}
+td {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: #00adb5;
+}
+th:first-child{
+    border-top-left-radius: 20px;
+}
+
+th:last-child {
+    border-top-right-radius: 20px;
+}
+td {
+    padding: 10px 20px;
+    background: #393e46;
+}
+.emptyTableText{
+    margin-top: 20%;
+    font-size: 40px;
+    font-family: Comic Sans MS, Comic Sans, cursive;
+    text-align: center;
+}
+.pagination{
+    font-size: 28px;
+    margin-top: 3%;
+    text-align: center;
+}
+.pagination a{
+    text-decoration: none;
+    color: #00adb5;
+}
+.createCourse button{
+    width: auto;
+    font-size: 32px;
+    margin-bottom: 2%;
+    height: 8vh;
+    outline: 0;
+    border-radius: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    background-color: #00adb5;
+    color: #eeeeee;
+}
+.createCourse button:hover{
+    transform: scale(0.97);
+}
+
+h1 {
+    cursor: default;
+    position: absolute;
+    color: #00adb5;
+    font-family: 'Rouge Script', cursive;
+    font-size: 76px;
+    font-weight: normal;
+    line-height: 48px;
+    margin-top: 4%;
+    margin-left: 31%;
+    text-shadow: 1px 1px 2px white;
+}
+
+.tableButton{
+    background-color: #eeeeee;
+    border-color: #eeeeee;
+}
+.updateButton{
+    background:url(/image/update.png) no-repeat;
+    margin-left: 24%;
+}
+.defaultButton{
+    border: none;
+    width: 3vw;
+    height: 6vh;
+    outline: 0;
+    cursor: pointer;
+}
+.removeButton{
+    background:url(/image/remove.png) no-repeat;
+}
+
+tr:last-child td:nth-last-child(3) {
+    border-bottom-right-radius: 20px;
+}
+.exception{
+    color: red;
+    margin-top: -42%;
+}

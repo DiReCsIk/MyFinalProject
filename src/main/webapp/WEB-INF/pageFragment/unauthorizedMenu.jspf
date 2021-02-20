@@ -1,0 +1,16 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<html>
+    <head>
+        <title>Title</title>
+    </head>
+    <body>
+    <ul class="list">
+        <li>
+            <a href="${pageContext.request.contextPath}/Controller?command=getUserInfo">Войти</a><hr>
+        </li>
+        <li>
+        <a href="../../page/signUp.jsp">Зарегистрироваться</a><hr>
+        </li>
+    </ul>
+    </body>
+</html>

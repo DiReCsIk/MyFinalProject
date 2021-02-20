@@ -1,0 +1,96 @@
+body {
+    background: linear-gradient(#181f22, #393e46, #181f22);
+    background-size: cover;
+    color: #eee;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+}
+.message {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.message h1, .message h2, .message h3 {
+    margin: 0;
+    line-height: 0.8;
+}
+.message h2, .message h3 {
+    font-weight: 300;
+    color: #c8fff4;
+}
+.message h1 {
+    font-weight: 700;
+    color: #00adb5;
+    font-size: 8em;
+}
+.message h2 {
+    margin: 30px 0;
+}
+.message h3 {
+    font-size: 2.5em;
+}
+.message h4 {
+    display: inline-block;
+    margin: 0 15px;
+}
+.message button {
+    background: transparent;
+    border: 2px solid #c8fff4;
+    padding: 5px 15px;
+    font-size: 1.25em;
+    transition: all 0.15s ease;
+    border-radius: 3px;
+}
+.message button a{
+    text-decoration: none;
+    color: #c8fff4;
+}
+.message button:hover {
+    background: #00adb5;
+    border: 2px solid #00adb5;
+    color: #eeeeee;
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+/*
+.header {
+    color: red;
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    vertical-align: center;
+}
+div {
+    margin-top: 6%;
+}
+img {
+    margin-left: 40%;
+}
+button{
+    margin-left: 44%;
+    padding:0.7em 1.7em;
+    border-radius:0.2em;
+    width: 12%;
+    box-sizing: border-box;
+    font-family:'Roboto',sans-serif;
+    font-weight: 400;
+    color:#FFFFFF;
+    background-color:crimson;
+    box-shadow:inset 0 -0.6em 1em -0.35em rgba(0,0,0,0.17),inset 0 0.6em 2em -0.3em rgba(255,255,255,0.15),inset 0 0 0 0.05em rgba(255,255,255,0.12);
+}
+button:hover{
+    box-shadow:inset 0 0.6em 2em -0.3em rgba(0,0,0,0.15),inset 0 0 0 0.05em rgba(255,255,255,0.12);
+}
+@media screen and (max-width: 600px){
+    button{
+        margin-left: 32%;
+        width: auto;
+    }
+    img{
+        margin-left: 30%;
+    }
+}
+*/

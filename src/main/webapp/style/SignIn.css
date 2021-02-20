@@ -1,0 +1,51 @@
+body {
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.box {
+    position: absolute;
+    margin-left: 37.6%;
+    margin-top: 12%;
+    justify-content: center;
+    line-height: 1.4;
+    background-color: #eeeeee;
+    padding: 1.2rem 1rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    width: 22%;
+    height: 46%;
+    text-align: center;
+    box-shadow: 0 10px 40px -10px white;
+    border-radius: 24px;
+}
+
+[type=submit] {
+    width: 50%;
+    height: 22%;
+    border-radius: 32px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    background-color: #00adb5;
+    margin-top: 7%;
+    color: #eeeeee;
+    outline: none;
+}
+
+[type=submit]:active {
+    transform: scale(0.97);
+}
+input {
+    font-size: 16px;
+    text-align: center;
+}
+h1 {
+    padding-bottom: 16px;
+    letter-spacing: -0.015em;
+    font-family: 'Fredoka One', sans-serif;
+    font-weight: normal;
+    font-size: 1.6rem;
+}
+.exception{
+    color: red;
+    margin-top: -10%;
+}
