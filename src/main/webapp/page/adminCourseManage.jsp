@@ -14,11 +14,11 @@
         </c:if>
         <main>
             <header>
-                <h1>Course manage</h1>
+                <h1><fmt:message key="adminCourses.header"/></h1>
             </header>
-            <div class="container" style="margin-top: 13%">
+            <div class="container">
                 <div class="createCourse">
-                    <button id="createCourse" onclick="createCourse()">+ Create course</button>
+                    <button id="createCourse" onclick="createCourse()"><fmt:message key="adminCourses.createCourse"/></button>
                 </div>
                 <form id="courseForm" action="Controller" method="post">
                     <label>
@@ -38,19 +38,19 @@
                     <c:choose>
                         <c:when test="${courseList eq null || courseList.size() eq 0}">
                             <script>noCourses()</script>
-                            <p class="emptyTableText">There are no courses here :c</p>
+                            <p class="emptyTableText"><fmt:message key="adminCourses.emptyTable"/></p>
                         </c:when>
                         <c:otherwise>
                             <table id="courseTable">
                                 <thead>
                                     <tr>
-                                        <th>Theme</th>
-                                        <th>Name</th>
-                                        <th>Start date</th>
-                                        <th>End date</th>
-                                        <th>Teacher</th>
-                                        <th>Term</th>
-                                        <th>Student count</th>
+                                        <th><fmt:message key="adminCourses.theme"/></th>
+                                        <th><fmt:message key="adminCourses.name"/></th>
+                                        <th><fmt:message key="adminCourses.startDate"/></th>
+                                        <th><fmt:message key="adminCourses.endDate"/></th>
+                                        <th><fmt:message key="adminCourses.teacher"/></th>
+                                        <th><fmt:message key="adminCourses.term"/></th>
+                                        <th><fmt:message key="adminCourses.studentCount"/></th>
                                     </tr>
                                 </thead>
                                 <tbody>

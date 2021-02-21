@@ -53,7 +53,7 @@ input[required] img {
     width: 98%;
 }
 [type=date]{
-    width: 76%;
+    width: 67%;
 }
 input:valid {
     border-color: rgba(173,255,47,0.6);

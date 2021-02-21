@@ -3,6 +3,7 @@ package com.MyServlet.DBManager.Dao.Impl;
 import com.MyServlet.DBManager.Dao.AbstractDao;
 import com.MyServlet.DBManager.Dao.UserDao;
 import com.MyServlet.Entity.User;
+import com.MyServlet.Exception.DAOException;
 import com.MyServlet.Util.UserRole;
 
 import java.sql.Connection;
@@ -32,31 +33,31 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public Collection<User> getAllEntities() throws Exception {
+    public Collection<User> getAllEntities() throws DAOException {
         return selectAllByStatement(SELECT_ALL_USERS);
     }
 
     @Override
-    public User selectEntityByID(int userID) throws Exception {
+    public User selectEntityByID(int userID) throws DAOException {
         return selectByStatement(SELECT_USER_BY_ID,
                 String.valueOf(userID));
     }
 
     @Override
-    public User selectUserByEmail(String email) throws Exception {
+    public User selectUserByEmail(String email) throws DAOException {
         return selectByStatement(SELECT_USER_BY_EMAIL,
                 email);
     }
 
     @Override
-    public void updateUserRole(String role, int userID) throws Exception {
+    public void updateUserRole(String role, int userID) throws DAOException {
         updateByStatement(UPDATE_USER_ROLE,
                 role,
                 String.valueOf(userID));
     }
 
     @Override
-    public Collection<User> getAllTypeEntitiesWithLimit(String type, int rowCount, int pageNumber) throws Exception {
+    public Collection<User> getAllTypeEntitiesWithLimit(String type, int rowCount, int pageNumber) throws DAOException {
         String statement;
         switch (type) {
             case "ADMINISTRATOR":
@@ -74,7 +75,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void updateEntity(User user) throws Exception {
+    public void updateEntity(User user) throws DAOException {
         updateByStatement(UPDATE_USER,
                 user.getEmail(),
                 user.getPassword(),
@@ -83,7 +84,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void insertEntity(User user) throws Exception {
+    public void insertEntity(User user) throws DAOException {
         updateByStatement(INSERT_USER,
                 user.getEmail(),
                 user.getPassword(),
@@ -91,7 +92,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void deleteEntityByID(int userID) throws Exception {
+    public void deleteEntityByID(int userID) throws DAOException {
         updateByStatement(DELETE_USER_BY_ID, String.valueOf(userID));
     }
 

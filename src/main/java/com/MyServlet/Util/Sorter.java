@@ -18,16 +18,22 @@ public class Sorter {
     public static List<Course> sortCourseList(ArrayList<Course> courses, String sortBy) {
         switch (sortBy) {
             case "Name":
+            case "Имя":
                 return sortCoursesByNameDesc(courses);
             case "NameAsc":
+            case "ИмяAsc":
                 return sortCoursesByNameAsc(courses);
             case "Term":
+            case "Длительность":
                 return sortCoursesByTermDesc(courses);
             case "TermAsc":
+            case "ДлительностьAsc":
                 return sortCoursesByTermAsc(courses);
             case "Student count":
+            case "Количество студентов":
                 return sortCoursesByStudentCountDesc(courses);
             case "Student countAsc":
+            case "Количество студентовAsc":
                 return sortCoursesByStudentCountAsc(courses);
         }
         return courses;

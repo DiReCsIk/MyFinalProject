@@ -67,5 +67,29 @@ public class Course extends Entity{
         this.term = term;
     }
 
+    @Override
+    public int hashCode() {
+        return 47 * getId() + Integer.hashCode(teacherID);
+    }
 
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Course)) {
+            return false;
+        }
+        if (this == other) {
+            return true;
+        }
+        Course otherCourse = (Course) other;
+        return this.name.equals(otherCourse.name) && this.teacherID == otherCourse.teacherID
+                && this.getStartDate().equals(otherCourse.getStartDate()) && this.getId() == otherCourse.getId()
+                && this.getTerm() == otherCourse.getTerm() && this.getEndDate().equals(otherCourse.getEndDate())
+                && this.getTheme().equals(otherCourse.getTheme());
+    }
+
+    @Override
+    public String toString() {
+        return "Course{ theme='" + theme + "', name='" + name + "', startDate=" + startDate + ", endDate=" + endDate +
+                ", teacherID=" + teacherID + ", term=" + term + ", studentCount=" + studentCount + '}';
+    }
 }

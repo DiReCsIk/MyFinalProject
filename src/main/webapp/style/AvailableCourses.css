@@ -1,5 +1,5 @@
 body{
-    height: 130%;
+    height: 127%;
 }
 .container {
     text-align: center;
@@ -7,7 +7,7 @@ body{
     position: absolute;
     margin-left: 6%;
     margin-right: 8%;
-    margin-top: 6%;
+    margin-top: 3%;
     line-height: 1.4;
     background-color: #eeeeee;
     padding: 1.2rem 1rem 2%;

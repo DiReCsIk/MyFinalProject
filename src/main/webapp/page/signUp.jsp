@@ -11,7 +11,7 @@
         <main>
             <div class="box">
                 <header>
-                     <h1>Sign Up</h1>
+                     <h1><fmt:message key="signUp.header"/></h1>
                 </header>
                 <c:if test="${not empty exception}">
                     <p class="exception"><c:out value="${exception}"/></p>
@@ -35,9 +35,9 @@
                         <input onkeyup="validatePassword()" id="confirmPassword" type="password" placeholder="Repeat Password" name="psw-repeat" required><br>
                     </label>
                     <label>
-                        <br><b style="font-family: Arial, sans-serif">Birthdate</b>
+                        <br><b style="font-family: Arial, sans-serif"><fmt:message key="signUp.birthDate"/></b>
                         <input type="date" id="date" onkeydown="return false" name="birthDate" required>
-                        <button type="submit" class="loginButton">Create Account</button>
+                        <button type="submit" class="loginButton"><fmt:message key="signUp.createAccount"/></button>
                     </label>
                 </form>
             </div>

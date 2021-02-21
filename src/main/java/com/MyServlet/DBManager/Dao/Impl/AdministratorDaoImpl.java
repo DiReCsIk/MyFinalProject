@@ -4,6 +4,7 @@ import com.MyServlet.DBManager.Dao.AbstractDao;
 import com.MyServlet.DBManager.Dao.AdministratorDao;
 import com.MyServlet.Entity.Administrator;
 import com.MyServlet.Entity.Teacher;
+import com.MyServlet.Exception.DAOException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,29 +30,29 @@ public class AdministratorDaoImpl extends AbstractDao<Administrator> implements 
     }
 
     @Override
-    public Collection<Administrator> getAllEntities() throws Exception {
+    public Collection<Administrator> getAllEntities() throws DAOException {
         return selectAllByStatement(SELECT_ALL_ADMINISTRATORS);
     }
 
     @Override
-    public Administrator selectEntityByID(int administratorID) throws Exception {
+    public Administrator selectEntityByID(int administratorID) throws DAOException {
         return selectByStatement(SELECT_ADMINISTRATOR_BY_ID,
                 String.valueOf(administratorID));
     }
 
     @Override
-    public Administrator selectAdministratorByUserID(int userID) throws Exception {
+    public Administrator selectAdministratorByUserID(int userID) throws DAOException {
         return selectByStatement(SELECT_ADMINISTRATOR_BY_USER_ID,
                 String.valueOf(userID));
     }
 
     @Override
-    public int getAllAdministratorsCount() throws Exception {
+    public int getAllAdministratorsCount() throws DAOException {
         return selectIntByStatement(SELECT_ALL_ADMINISTRATORS_COUNT);
     }
 
     @Override
-    public void raiseToAdministrator(Teacher teacher) throws Exception {
+    public void raiseToAdministrator(Teacher teacher) throws DAOException {
         updateByStatement(INSERT_ADMINISTRATOR,
                 teacher.getName(),
                 teacher.getSurName(),
@@ -61,7 +62,7 @@ public class AdministratorDaoImpl extends AbstractDao<Administrator> implements 
     }
 
     @Override
-    public void updateEntity(Administrator administrator) throws Exception {
+    public void updateEntity(Administrator administrator) throws DAOException {
         updateByStatement(UPDATE_ADMINISTRATOR,
                 administrator.getName(),
                 administrator.getSurName(),
@@ -70,7 +71,7 @@ public class AdministratorDaoImpl extends AbstractDao<Administrator> implements 
     }
 
     @Override
-    public void insertEntity(Administrator administrator) throws Exception {
+    public void insertEntity(Administrator administrator) throws DAOException {
         updateByStatement(INSERT_ADMINISTRATOR,
                 administrator.getName(),
                 administrator.getSurName(),
@@ -79,7 +80,7 @@ public class AdministratorDaoImpl extends AbstractDao<Administrator> implements 
     }
 
     @Override
-    public void deleteEntityByID(int administratorID) throws Exception {
+    public void deleteEntityByID(int administratorID) throws DAOException {
         updateByStatement(DELETE_ADMINISTRATOR_BY_ID,
                 String.valueOf(administratorID));
     }

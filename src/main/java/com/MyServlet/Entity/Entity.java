@@ -1,6 +1,8 @@
 package com.MyServlet.Entity;
 
-public abstract class Entity {
+import java.io.Serializable;
+
+public abstract class Entity implements Serializable {
     private int id;
 
     public int getId() {

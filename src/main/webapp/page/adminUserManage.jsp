@@ -14,13 +14,13 @@
         </c:if>
         <main>
             <header>
-                <h1>User manage</h1>
+                <h1><fmt:message key="adminUsers.header"/></h1>
             </header>
             <div class="container">
                 <div class="userList" id="userList">
-                    <a href="Controller?command=getStudentsInfo&pageNumber=1">STUDENTS</a>
-                    <a href="Controller?command=getTeachersInfo&pageNumber=1">TEACHERS</a>
-                    <a href="Controller?command=getAdministratorsInfo&pageNumber=1">ADMINISTRATORS</a>
+                    <a href="Controller?command=getStudentsInfo&pageNumber=1"><fmt:message key="adminUsers.students"/></a>
+                    <a href="Controller?command=getTeachersInfo&pageNumber=1"><fmt:message key="adminUsers.teachers"/></a>
+                    <a href="Controller?command=getAdministratorsInfo&pageNumber=1"><fmt:message key="adminUsers.administrators"/></a>
                 </div>
                 <form id="userForm" action="Controller" method="post">
                     <label>
@@ -36,27 +36,27 @@
                     <c:choose>
                         <c:when test="${dataList.size() eq 0}">
                             <script>noUsers()</script>
-                            <p class="emptyTableText">There are no users in this category :c</p>
+                            <p class="emptyTableText"><fmt:message key="adminUsers.emptyTable"/></p>
                         </c:when>
                         <c:otherwise>
                             <table id="userTable">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Surname</th>
-                                        <th>Birthdate</th>
+                                        <th><fmt:message key="adminUsers.name"/></th>
+                                        <th><fmt:message key="adminUsers.surName"/></th>
+                                        <th><fmt:message key="adminUsers.birthDate"/></th>
                                         <c:choose>
                                             <c:when test="${userType eq 'student'}">
-                                                <th>Ban status</th>
-                                                <th>Raise</th>
+                                                <th><fmt:message key="adminUsers.banStatus"/></th>
+                                                <th><fmt:message key="adminUsers.raise"/></th>
                                             </c:when>
                                             <c:when test="${userType eq 'teacher'}">
-                                                <th>Decline</th>
-                                                <th>Raise</th>
-                                                <th>Course status</th>
+                                                <th><fmt:message key="adminUsers.decline"/></th>
+                                                <th><fmt:message key="adminUsers.raise"/></th>
+                                                <th><fmt:message key="adminUsers.courseStatus"/></th>
                                             </c:when>
                                         </c:choose>
-                                        <th>E-mail</th>
+                                        <th><fmt:message key="adminUsers.email"/></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,28 +70,28 @@
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${userDataList.banStatus eq true}">
-                                                                <button id="${userData.get("userID").get(i.index)}" onclick="unbanUser(this)">Заблокирован</button>
+                                                                <button id="${userData.get("userID").get(i.index)}" onclick="unbanUser(this)"><fmt:message key="adminUsers.blocked"/></button>
                                                             </c:when>
                                                             <c:otherwise>
-                                                                <button id="${userData.get("userID").get(i.index)}" onclick="banUser(this)">Нет</button>
+                                                                <button id="${userData.get("userID").get(i.index)}" onclick="banUser(this)"><fmt:message key="adminUsers.unblocked"/></button>
                                                             </c:otherwise>
                                                         </c:choose>
                                                     </td>
                                                     <td>
-                                                        <button id="${userData.get("userID").get(i.index)}" onclick="upToTeacher(this)">To teacher</button>
+                                                        <button id="${userData.get("userID").get(i.index)}" onclick="upToTeacher(this)"><fmt:message key="adminUsers.toTeacher"/></button>
                                                     </td>
                                                 </c:when>
                                                 <c:when test="${userType eq 'teacher'}">
                                                     <td>
-                                                        <button id="${userData.get("userID").get(i.index)}" onclick="downToStudent(this)">To student</button>
+                                                        <button id="${userData.get("userID").get(i.index)}" onclick="downToStudent(this)"><fmt:message key="adminUsers.toStudent"/></button>
                                                     </td>
                                                     <td>
-                                                        <button id="${userData.get("userID").get(i.index)}" onclick="upToAdmin(this)">To administrator</button>
+                                                        <button id="${userData.get("userID").get(i.index)}" onclick="upToAdmin(this)"><fmt:message key="adminUsers.toAdministrator"/></button>
                                                     </td>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${courseStatus.get(i.index) ne 0}">In progress</c:when>
-                                                            <c:otherwise>Free</c:otherwise>
+                                                            <c:when test="${courseStatus.get(i.index) ne 0}"><fmt:message key="adminUsers.inProgress"/></c:when>
+                                                            <c:otherwise><fmt:message key="adminUsers.free"/></c:otherwise>
                                                         </c:choose>
                                                     </td>
                                                 </c:when>

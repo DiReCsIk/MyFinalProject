@@ -1,21 +1,23 @@
 package com.MyServlet.DBManager.Service;
 
 import com.MyServlet.Entity.Student;
+import com.MyServlet.Exception.ConnectionException;
+import com.MyServlet.Exception.ServiceException;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public interface StudentService extends DefaultService<Student> {
-    Collection<Student> getAllEntitiesByUserID(ArrayList<String> usersID) throws Exception;
+    Collection<Student> getAllEntitiesByUserID(ArrayList<String> usersID) throws ConnectionException, ServiceException;
 
-    Student selectStudentByUserID(int userID) throws Exception;
+    Student selectStudentByUserID(int userID) throws ConnectionException, ServiceException;
 
-    int getAllStudentsCount() throws Exception;
+    int getAllStudentsCount() throws ConnectionException, ServiceException;
 
-    void unbanStudent(int userID) throws Exception;
+    void unbanStudent(int userID) throws ConnectionException, ServiceException;
 
-    void banStudent(int userID) throws Exception;
+    void banStudent(int userID) throws ConnectionException, ServiceException;
 
-    void declineToStudent(int userID) throws Exception;
+    void declineToStudent(int userID) throws ConnectionException, ServiceException;
 
 }

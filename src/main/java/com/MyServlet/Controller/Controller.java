@@ -3,6 +3,9 @@ package com.MyServlet.Controller;
 import com.MyServlet.Command.Command;
 import com.MyServlet.Command.CommandContainer;
 import com.MyServlet.Command.UpdateUserInfoCommand;
+import com.MyServlet.Exception.CommandException;
+import com.MyServlet.Exception.ConnectionException;
+import com.MyServlet.Util.Pages;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -21,16 +24,19 @@ public class Controller extends HttpServlet {
         log.info("In Controller doGet method");
         String commandName = request.getParameter("command");
         Command command = CommandContainer.getCommand(commandName);
-        String respPage = "error_404.jsp";
         try {
             log.info("Try to execute " + commandName);
-            respPage = command.execute(request, response);
-        } catch (Exception exception) {
-            log.error("Error! ", exception);
-            exception.printStackTrace();
+            String respPage = command.execute(request, response);
+            log.info("Forwarding to " + respPage);
+            request.getRequestDispatcher(respPage).forward(request, response);
+        } catch (CommandException commandException) {
+            log.error("Error! ", commandException);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
-        log.info("Forwarding to " + respPage);
-        request.getRequestDispatcher(respPage).forward(request, response);
+        catch (ConnectionException connectionException) {
+            log.error("Error! ", connectionException);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
@@ -38,16 +44,18 @@ public class Controller extends HttpServlet {
         log.info("In Controller doPost method");
         String commandName = request.getParameter("command");
         Command command = CommandContainer.getCommand(commandName);
-        String respPage = "error_404.jsp";
         try {
             log.info("Try to execute " + commandName);
-            respPage = command.execute(request, response);
-        } catch (Exception exception) {
-            //TODO
-            log.error("Error! ", exception);
-            System.out.println(exception.getMessage());
+            String respPage = command.execute(request, response);
+            log.info("Redirecting to " + respPage);
+            response.sendRedirect(respPage);
+        } catch (CommandException commandException) {
+            log.error("Error! ", commandException);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
-        log.info("Redirecting to " + respPage);
-        response.sendRedirect(respPage);
+        catch (ConnectionException connectionException) {
+            log.error("Error! ", connectionException);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 }

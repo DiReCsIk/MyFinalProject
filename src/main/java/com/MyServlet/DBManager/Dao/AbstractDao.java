@@ -2,6 +2,7 @@ package com.MyServlet.DBManager.Dao;
 
 import com.MyServlet.DBManager.Service.Impl.AdministratorServiceImpl;
 import com.MyServlet.Entity.Entity;
+import com.MyServlet.Exception.DAOException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -18,7 +19,7 @@ public abstract class AbstractDao<E extends Entity> {
         this.connection = connection;
     }
 
-    protected E selectByStatement(String sqlStatement, String... whereArgs) throws Exception {
+    protected E selectByStatement(String sqlStatement, String... whereArgs) throws DAOException {
         E entity = null;
         try (PreparedStatement preparedStatement = createStatement(sqlStatement, whereArgs)) {
             log.info("Executing preparedStatement");
@@ -29,12 +30,12 @@ public abstract class AbstractDao<E extends Entity> {
             }
         } catch (SQLException exception) {
             log.error("Error! " + exception);
-            throw new Exception(exception);
+            throw new DAOException(exception.getMessage(), exception);
         }
         return entity;
     }
 
-    protected String selectStringByStatement(String sqlStatement, String... whereArgs) throws Exception {
+    protected String selectStringByStatement(String sqlStatement, String... whereArgs) throws DAOException {
         String string = null;
         try (PreparedStatement preparedStatement = createStatement(sqlStatement, whereArgs)) {
             log.info("Executing preparedStatement");
@@ -45,12 +46,12 @@ public abstract class AbstractDao<E extends Entity> {
             }
         } catch (SQLException exception) {
             log.error("Error! " + exception);
-            throw new Exception(exception);
+            throw new DAOException(exception.getMessage(), exception);
         }
         return string;
     }
 
-    protected Collection<E> selectAllByStatement(String sqlStatement, String... whereArgs) throws Exception {
+    protected Collection<E> selectAllByStatement(String sqlStatement, String... whereArgs) throws DAOException {
         Collection<E> list = new ArrayList<>();
         try (PreparedStatement preparedStatement = createStatement(sqlStatement, whereArgs)) {
             log.info("Executing preparedStatement");
@@ -61,7 +62,7 @@ public abstract class AbstractDao<E extends Entity> {
             }
         } catch (SQLException exception) {
             log.error("Error! " + exception);
-            throw new Exception(exception);
+            throw new DAOException(exception.getMessage(), exception);
         }
         return list;
     }
@@ -82,7 +83,7 @@ public abstract class AbstractDao<E extends Entity> {
         return preparedStatement;
     }
 
-    protected Map<String, ArrayList<String>> selectMapByStatement(String sqlStatement, String[] arrayListArgs, String... arg) throws Exception {
+    protected Map<String, ArrayList<String>> selectMapByStatement(String sqlStatement, String[] arrayListArgs, String... arg) throws DAOException {
         Map<String, ArrayList<String>> result = new LinkedHashMap<>();
         for (String arrayListType : arrayListArgs) {
             result.put(arrayListType, new ArrayList<>());
@@ -99,12 +100,12 @@ public abstract class AbstractDao<E extends Entity> {
             }
         } catch (SQLException exception) {
             log.error("Error! " + exception);
-            throw new Exception();
+            throw new DAOException(exception.getMessage(), exception);
         }
         return result;
     }
 
-    protected List<Integer> selectIntegerListByStatement(String sqlStatement, String... whereArgs) throws Exception {
+    protected List<Integer> selectIntegerListByStatement(String sqlStatement, String... whereArgs) throws DAOException {
         List<Integer> result = new ArrayList<>();
         try (PreparedStatement preparedStatement = createStatement(sqlStatement, whereArgs)) {
             log.info("Executing preparedStatement");
@@ -115,12 +116,12 @@ public abstract class AbstractDao<E extends Entity> {
             }
         } catch (Exception exception) {
             log.error("Error! " + exception);
-            throw new Exception();
+            throw new DAOException(exception.getMessage(), exception);
         }
         return result;
     }
 
-    protected List<String> selectStringListByStatement(String sqlStatement, String... whereArgs) throws Exception {
+    protected List<String> selectStringListByStatement(String sqlStatement, String... whereArgs) throws DAOException {
         List<String> result = new ArrayList<>();
         try (PreparedStatement preparedStatement = createStatement(sqlStatement, whereArgs)) {
             log.info("Executing preparedStatement");
@@ -131,12 +132,12 @@ public abstract class AbstractDao<E extends Entity> {
             }
         } catch (Exception exception) {
             log.error("Error! " + exception);
-            throw new Exception();
+            throw new DAOException(exception.getMessage(), exception);
         }
         return result;
     }
 
-    protected int selectIntByStatement(String sqlStatement, String... arg) throws Exception {
+    protected int selectIntByStatement(String sqlStatement, String... arg) throws DAOException {
         try (PreparedStatement preparedStatement = createStatement(sqlStatement, arg)) {
             log.info("Executing preparedStatement");
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -146,20 +147,20 @@ public abstract class AbstractDao<E extends Entity> {
             }
         } catch (SQLException exception) {
             log.error("Error! " + exception);
-            throw new Exception(exception);
+            throw new DAOException(exception.getMessage(), exception);
         }
         return 0;
     }
 
     protected abstract E createEntity(ResultSet resultSet) throws SQLException;
 
-    protected void updateByStatement(String sqlStatement, String... args) throws Exception {
+    protected void updateByStatement(String sqlStatement, String... args) throws DAOException {
         try (PreparedStatement preparedStatement = createStatement(sqlStatement, args)) {
             log.info("Executing preparedStatement");
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             log.error("Error! " + exception);
-            throw new Exception(exception);
+            throw new DAOException(exception.getMessage(), exception);
         }
     }
 }

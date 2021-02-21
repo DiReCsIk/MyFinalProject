@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<html>
+<html lang="${sessionScope.lang}">
     <head>
         <title>DireElective - Main page</title>
         <link rel="shortcut icon" href="../image/icon.png" type="image/png">
@@ -10,24 +10,18 @@
         <main>
             <div class="data">
                 <header class="theme">
-                    <h1>
-                        Учиться - это модно!
-                    </h1>
+                    <h1><fmt:message key="main.header"/></h1>
                 </header>
                 <div class="text">
-                    <p>
-                        Учеба - это интересно. Ведь это ключ, который открывает дверь к обширному и
-                        неиссякаемому миру знаний. Не зря ведь придумали пословицу:
-                        "Ученье - свет, а неученье - тьма". Она как бы подчеркивает, что необразованный человек
-                        ничего не добьется в жизни, не узнает нового и интересного.
-                    </p>
-                    <p>
-                        Учеба является интересной, потому что помогает человеку узнать что-то новое,
-                        раскрыть себя и свои таланты.. . Каждый должен учиться, не потому что это его обязанность,
-                        а потому что этим он поможет себе в дальнейшем. Чем больше человек познает,
-                        тем интереснее с ним общаться другим людям, а его эрудиция открывает ему двери в любые
-                        области карьеры.
-                    </p>
+                    <p><fmt:message key="main.firstParagraph"/></p>
+                    <p><fmt:message key="main.secondParagraph"/></p>
+                </div>
+                <div class="dropDown">
+                    <button class="dropButton"><fmt:message key="menu.selectLanguage"/></button>
+                    <div class="dropDown-content">
+                        <a onclick="location.href='/page/main.jsp?lang=ru'">RU</a>
+                        <a onclick="location.href='/page/main.jsp?lang=en'">EN</a>
+                    </div>
                 </div>
             </div>
         </main>

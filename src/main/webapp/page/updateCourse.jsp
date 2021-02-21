@@ -13,22 +13,22 @@
         </c:if>
         <div class="container">
             <header>
-                <h1>Update course</h1>
+                <h1><fmt:message key="updateCourse.header"/></h1>
             </header>
             <form id="course" method="post" action="${pageContext.request.contextPath}/Controller?command=updateCourseInfo">
-                <label>Course name:
+                <label><fmt:message key="updateCourse.courseName"/>
                     <input type="text" placeholder="Course name" value="${course.name}" name="name" required/>
                 <br></label>
-                <label>Course theme:
+                <label><fmt:message key="updateCourse.courseTheme"/>
                     <input type="text" placeholder="Course theme" value="${course.theme}" name="theme" required/>
                 <br></label>
-                <label>Course start date:
+                <label><fmt:message key="updateCourse.courseStartDate"/>
                     <input id="startDate" onchange="dataChange()" type="date" placeholder="Course start date" value="${course.startDate}" name="startDate" required/>
                 <br></label>
-                <label>Course end date:
+                <label><fmt:message key="updateCourse.courseEndDate"/>
                     <input id="endDate" type="date" placeholder="Course end date" value="${course.endDate}" name="endDate" required/>
                 <br></label>
-                <label>Teacher:
+                <label><fmt:message key="updateCourse.teacher"/>
                     <input id="teacherID" hidden name="teacherID">
                     <input id="courseID" hidden name="courseID" value="${courseID}">
                     <select id="select" onchange="changeID()">
@@ -37,8 +37,8 @@
                         </c:forEach>
                     </select>
                     <br>
-                    <button id="updateButton" type="submit" class="updateButton">Update</button>
-                    <button id="backButton" type="button" class="updateButton" onclick="history.back()">Back</button>
+                    <button id="updateButton" type="submit" class="updateButton"><fmt:message key="updateCourse.update"/></button>
+                    <button id="backButton" type="button" class="updateButton" onclick="history.back()"><fmt:message key="updateCourse.back"/></button>
                 </label>
             </form>
             <c:if test="${not empty exception}">

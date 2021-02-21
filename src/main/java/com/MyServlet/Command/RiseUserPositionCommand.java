@@ -8,52 +8,64 @@ import com.MyServlet.DBManager.Service.StudentService;
 import com.MyServlet.DBManager.Service.TeacherService;
 import com.MyServlet.Entity.Student;
 import com.MyServlet.Entity.User;
+import com.MyServlet.Exception.CommandException;
+import com.MyServlet.Exception.ConnectionException;
+import com.MyServlet.Exception.ServiceException;
+import com.MyServlet.Util.Pages;
 import com.MyServlet.Util.UserRole;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class RiseUserPositionCommand implements Command {
     private static final Logger log = Logger.getLogger(RiseUserPositionCommand.class.getName());
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In RiseUserPositionCommand");
+        HttpSession session = request.getSession();
         log.info("Validating user");
         User administrator = (User) request.getSession().getAttribute("user");
         if (administrator == null || !administrator.getUserRole().equals(UserRole.ADMINISTRATOR)) {
             log.info("Fail. User is not an administrator");
-            return "/page/main.jsp";
+            return Pages.MAIN_PAGE;
         }
         int userID = Integer.parseInt(request.getParameter("userID"));
         TeacherService teacherService = new TeacherServiceImpl();
-        if (request.getParameter("userRaise").equals("admin")) {
-            if(teacherService.selectTeacherCourseID(teacherService.selectTeacherByUserID(userID).getId()) == 0) {
-                log.info("Updating the selected user to administrator");
-                AdministratorService administratorService = new AdministratorServiceImpl();
-                if (administratorService.selectAdministratorByUserID(userID) == null) {
-                    administratorService.raiseToAdministrator(userID);
+        try {
+            if (request.getParameter("userRaise").equals("admin")) {
+                if (teacherService.selectTeacherCourseID(teacherService.selectTeacherByUserID(userID).getId()) == 0) {
+                    log.info("Updating the selected user to administrator");
+                    AdministratorService administratorService = new AdministratorServiceImpl();
+                    if (administratorService.selectAdministratorByUserID(userID) == null) {
+                        administratorService.raiseToAdministrator(userID);
+                    }
+                    log.info("RiseUserPositionCommand successful");
+                } else {
+                    session.setAttribute("exception", "First you need to remove teacher course");
+                    log.info("Fail. Teacher is not free");
+                }
+                return Pages.GET_TEACHERS_INFO + "&pageNumber=" + request.getParameter("pageNumber");
+            }
+            log.info("Checking student ban status");
+            StudentService studentService = new StudentServiceImpl();
+            if (studentService.selectStudentByUserID(userID).isBanStatus()) {
+                session.setAttribute("exception", "First you need to unblock the user");
+                log.info("Fail. User is banned");
+            } else {
+                log.info("Updating the selected user to teacher");
+                if (teacherService.selectTeacherByUserID(userID) == null) {
+                    teacherService.raiseToTeacher(userID);
                 }
                 log.info("RiseUserPositionCommand successful");
-            } else {
-                request.getSession().setAttribute("exception", "First you need to remove teacher course");
-                log.info("Fail. Teacher is not free");
             }
-            return "Controller?command=getTeachersInfo";
+        } catch (
+                ServiceException serviceException) {
+            log.error("Error!", serviceException);
+            throw new CommandException(serviceException.getMessage(), serviceException);
         }
-        log.info("Checking student ban status");
-        StudentService studentService = new StudentServiceImpl();
-        if (studentService.selectStudentByUserID(userID).isBanStatus()) {
-            request.getSession().setAttribute("exception", "First you need to unblock the user");
-            log.info("Fail. User is banned");
-        } else {
-            log.info("Updating the selected user to teacher");
-            if (teacherService.selectTeacherByUserID(userID) == null) {
-                teacherService.raiseToTeacher(userID);
-            }
-            log.info("RiseUserPositionCommand successful");
-        }
-        return "Controller?command=getStudentsInfo&pageNumber=" + request.getParameter("pageNumber");
+        return Pages.GET_STUDENTS_INFO + "&pageNumber=" + request.getParameter("pageNumber");
     }
 }

@@ -1,13 +1,13 @@
+
 .h1Style {
     cursor: default;
-    position: absolute;
     color: #00adb5;
     font-family: 'Rouge Script', cursive;
+    text-align: center;
     font-size: 86px;
     font-weight: normal;
     line-height: 48px;
     margin-top: 4%;
-    margin-left: 37%;
     text-shadow: 1px 1px 2px white;
 }
 .container {
@@ -15,7 +15,7 @@
     position: absolute;
     margin-left: 8%;
     margin-right: 8%;
-    margin-top: 12%;
+    margin-top: 2%;
     line-height: 1.4;
     box-sizing: border-box;
     background-color: #eeeeee;
@@ -58,14 +58,14 @@
     transition: all 0.1s ease-in-out;
     background-color: #00adb5;
     position: absolute;
-    margin-left: 38%;
-    margin-top: 32%;
+    margin-left: 39%;
+    margin-top: 22%;
     color: #eeeeee;
 }
 button:hover {
     opacity: 0.8;
 }
-button:active {
+button:active{
     transform: scale(0.97);
 }
 .undoButtonStyle span {
@@ -84,7 +84,7 @@ button:active {
     background-color: #fd6469;
     position: absolute;
     margin-left: 51%;
-    margin-top: 32%;
+    margin-top: 22%;
     color: #eeeeee;
 }
 .confirmButtonStyle span {
@@ -113,19 +113,18 @@ button:active {
     margin-top: -14%;
     display: none;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
     text-align: center;
 }
 .form input[type=text], .form input[type=password], .form input[type=date]{
     font-size: 16px;
     text-align: center;
-    width: auto;
     height: 40%;
     box-sizing: border-box;
     margin-top: 16%;
 }
 .form input[type=date]{
-    margin-top: 15%;
+    margin-top: 21%;
 }
 .form input:focus {
     border: 1px solid #555;

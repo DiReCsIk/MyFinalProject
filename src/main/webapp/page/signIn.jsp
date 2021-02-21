@@ -14,7 +14,7 @@
         <main>
             <div class="box">
                 <header>
-                    <h1>Sign In</h1>
+                    <h1><fmt:message key="signIn.header"/></h1>
                 </header>
                 <c:if test="${not empty exception}">
                     <p class="exception"><c:out value="${exception}"/></p>
@@ -22,17 +22,17 @@
                 </c:if>
                 <form method="post" action="${pageContext.request.contextPath}/Controller?command=signIn">
                     <label>
-                        <b>E-mail</b>
+                        <b><fmt:message key="signIn.email"/></b>
                         <br><input type="text" placeholder="Enter Email" name="email" required><br>
                     </label>
                     <label>
-                        <br><b>Password</b>
+                        <br><b><fmt:message key="signIn.password"/></b>
                         <br><input type="password" placeholder="Enter Password" name="password" required><br>
                     </label>
                     <label>
-                        <br><input type="checkbox"  name="rememberBox">Remember me?<br>
+                        <br><input type="checkbox"  name="rememberBox"><fmt:message key="signIn.rememberMe"/><br>
                     </label>
-                    <button type="submit">Sign in</button>
+                    <button type="submit"><fmt:message key="signIn.signInButton"/></button>
                 </form>
             </div>
         </main>

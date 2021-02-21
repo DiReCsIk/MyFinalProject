@@ -13,22 +13,22 @@
     </c:if>
     <div class="container">
         <header>
-            <h1>Create course</h1>
+            <h1><fmt:message key="createCourse.header"/></h1>
         </header>
         <form id="course" method="post" action="${pageContext.request.contextPath}/Controller?command=createCourse">
-            <label>Course name:
+            <label><fmt:message key="createCourse.courseName"/>
                 <input type="text" placeholder="Course name" name="name" required/>
                 <br></label>
-            <label>Course theme:
+            <label><fmt:message key="createCourse.theme"/>
                 <input type="text" placeholder="Course theme" name="theme" required/>
                 <br></label>
-            <label>Course start date:
+            <label><fmt:message key="createCourse.courseStartDate"/>
                 <input id="startDate" onchange="dataChange()" type="date" placeholder="Course start date" name="startDate" required/>
                 <br></label>
-            <label>Course end date:
+            <label><fmt:message key="createCourse.courseEndDate"/>
                 <input id="endDate" type="date" placeholder="Course end date" name="endDate" required/>
                 <br></label>
-            <label>Teacher:
+            <label><fmt:message key="createCourse.teacher"/>
                 <input id="teacherID" hidden name="teacherID">
                 <input id="courseID" hidden name="courseID" value="${courseID}">
                 <select id="select" onchange="changeID()">
@@ -37,8 +37,8 @@
                     </c:forEach>
                 </select>
                 <br>
-                <button id="updateButton" type="submit" class="updateButton">Create</button>
-                <button id="backButton" type="button" class="updateButton" onclick="history.go(-1)">Back</button>
+                <button id="updateButton" type="submit" class="updateButton"><fmt:message key="createCourse.create"/></button>
+                <button id="backButton" type="button" class="updateButton" onclick="history.go(-1)"><fmt:message key="createCourse.back"/></button>
             </label>
         </form>
         <c:if test="${not empty exception}">

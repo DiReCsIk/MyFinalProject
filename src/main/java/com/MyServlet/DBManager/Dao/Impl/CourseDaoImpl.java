@@ -5,6 +5,7 @@ package com.MyServlet.DBManager.Dao.Impl;
 import com.MyServlet.DBManager.Dao.AbstractDao;
 import com.MyServlet.DBManager.Dao.CourseDao;
 import com.MyServlet.Entity.Course;
+import com.MyServlet.Exception.DAOException;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -81,18 +82,18 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public Collection<Course> getAllEntities() throws Exception {
+    public Collection<Course> getAllEntities() throws DAOException {
         return selectAllByStatement(SELECT_ALL_COURSES);
     }
 
     @Override
-    public Course selectEntityByID(int courseID) throws Exception {
+    public Course selectEntityByID(int courseID) throws DAOException {
         return selectByStatement(SELECT_COURSE_BY_ID,
                 String.valueOf(courseID));
     }
 
     @Override
-    public void updateEntity(Course course) throws Exception {
+    public void updateEntity(Course course) throws DAOException {
         updateByStatement(UPDATE_COURSE,
                 course.getTheme(),
                 course.getName(),
@@ -104,7 +105,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public void insertEntity(Course course) throws Exception {
+    public void insertEntity(Course course) throws DAOException {
         updateByStatement(INSERT_COURSE,
                 course.getTheme(),
                 course.getName(),
@@ -115,7 +116,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public void deleteEntityByID(int courseID) throws Exception {
+    public void deleteEntityByID(int courseID) throws DAOException {
         updateByStatement(DELETE_COURSE_BY_ID, String.valueOf(courseID));
     }
 
@@ -134,7 +135,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public Collection<Course> selectAllStudentAvailableCourses(int pageNumber, int rowCount, String courseName) throws Exception {
+    public Collection<Course> selectAllStudentAvailableCourses(int pageNumber, int rowCount, String courseName) throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENT_AVAILABLE_COURSES,
                 courseName,
                 String.valueOf(rowCount),
@@ -142,7 +143,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public Collection<Course> selectAllStudentAvailableCoursesRegistered(int studentID, int pageNumber, int rowCount, String courseName) throws Exception {
+    public Collection<Course> selectAllStudentAvailableCoursesRegistered(int studentID, int pageNumber, int rowCount, String courseName) throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENT_AVAILABLE_COURSES_REGISTERED,
                 String.valueOf(studentID),
                 courseName,
@@ -151,7 +152,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public Collection<Course> selectAllStudentFinishedCourses(int studentID, int pageNumber, int rowCount) throws Exception {
+    public Collection<Course> selectAllStudentFinishedCourses(int studentID, int pageNumber, int rowCount) throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENT_FINISHED_COURSES,
                 String.valueOf(studentID),
                 String.valueOf(rowCount),
@@ -159,7 +160,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public Collection<Course> selectAllStudentInProgressCourses(int studentID, int pageNumber, int rowCount) throws Exception {
+    public Collection<Course> selectAllStudentInProgressCourses(int studentID, int pageNumber, int rowCount) throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENT_IN_PROGRESS_COURSES,
                 String.valueOf(studentID),
                 String.valueOf(rowCount),
@@ -167,7 +168,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public Collection<Course> selectAllStudentNotStartedCourses(int studentID, int pageNumber, int rowCount) throws Exception {
+    public Collection<Course> selectAllStudentNotStartedCourses(int studentID, int pageNumber, int rowCount) throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENT_NOT_STARTED_COURSES,
                 String.valueOf(studentID),
                 String.valueOf(rowCount),
@@ -175,38 +176,38 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public int selectAvailableCoursesCount(String courseName) throws Exception {
+    public int selectAvailableCoursesCount(String courseName) throws DAOException {
         return selectIntByStatement(SELECT_ALL_STUDENT_AVAILABLE_COURSES_COUNT,
                 courseName);
     }
 
     @Override
-    public int selectAvailableCoursesCountRegistered(int studentID, String courseName) throws Exception {
+    public int selectAvailableCoursesCountRegistered(int studentID, String courseName) throws DAOException {
         return selectIntByStatement(SELECT_ALL_STUDENT_AVAILABLE_COURSES_COUNT_REGISTERED,
                 String.valueOf(studentID),
                 courseName);
     }
 
     @Override
-    public int selectFinishedCoursesCount(int studentID) throws Exception {
+    public int selectFinishedCoursesCount(int studentID) throws DAOException {
         return selectIntByStatement(SELECT_ALL_STUDENT_FINISHED_COURSES_COUNT,
                 String.valueOf(studentID));
     }
 
     @Override
-    public int selectInProgressCoursesCount(int studentID) throws Exception {
+    public int selectInProgressCoursesCount(int studentID) throws DAOException {
         return selectIntByStatement(SELECT_ALL_STUDENT_IN_PROGRESS_COURSES_COUNT,
                 String.valueOf(studentID));
     }
 
     @Override
-    public int selectNotStartedCoursesCount(int studentID) throws Exception {
+    public int selectNotStartedCoursesCount(int studentID) throws DAOException {
         return selectIntByStatement(SELECT_ALL_STUDENT_NOT_STARTED_COURSES_COUNT,
                 String.valueOf(studentID));
     }
 
     @Override
-    public void updateStudentMark(String mark, int studentID, int courseID) throws Exception {
+    public void updateStudentMark(String mark, int studentID, int courseID) throws DAOException {
         updateByStatement(UPDATE_STUDENT_MARK,
                 mark,
                 String.valueOf(studentID),
@@ -214,45 +215,45 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public void insertStudentToCourse(int studentID, int courseID) throws Exception {
+    public void insertStudentToCourse(int studentID, int courseID) throws DAOException {
         updateByStatement(INSERT_STUDENT_INTO_COURSE,
                 String.valueOf(studentID),
                 String.valueOf(courseID));
     }
 
     @Override
-    public int selectStudentsCountOnCourse(int courseID) throws Exception {
+    public int selectStudentsCountOnCourse(int courseID) throws DAOException {
         return selectIntByStatement(SELECT_STUDENTS_COUNT_ON_COURSE,
                 String.valueOf(courseID));
     }
 
     @Override
-    public Integer selectStudentMarkOnCourse(int studentID, int courseID) throws Exception {
+    public Integer selectStudentMarkOnCourse(int studentID, int courseID) throws DAOException {
         return selectIntByStatement(SELECT_STUDENT_MARK_ON_COURSE,
                 String.valueOf(studentID),
                 String.valueOf(courseID));
     }
 
     @Override
-    public Collection<Course> getAllEntities(int pageNumber, int rowCount) throws Exception {
+    public Collection<Course> getAllEntities(int pageNumber, int rowCount) throws DAOException {
         return selectAllByStatement(SELECT_ALL_COURSES_LIMIT,
                 String.valueOf(rowCount),
                 String.valueOf(rowCount * (pageNumber - 1)));
     }
 
     @Override
-    public Collection<String>  selectAllCoursesName() throws Exception {
+    public Collection<String>  selectAllCoursesName() throws DAOException {
         return selectStringListByStatement(SELECT_ALL_COURSES_AVAILABLE_NAME);
     }
 
     @Override
-    public Collection<String>  selectAllCoursesNameByStudentID(int studentID) throws Exception {
+    public Collection<String>  selectAllCoursesNameByStudentID(int studentID) throws DAOException {
         return selectStringListByStatement(SELECT_ALL_COURSES_AVAILABLE_NAME_BY_ID,
                 String.valueOf(studentID));
     }
 
     @Override
-    public Collection<Course> selectAllFinishedTeacherCourses(int studentID, int teacherID, int pageNumber, int rowCount) throws Exception {
+    public Collection<Course> selectAllFinishedTeacherCourses(int studentID, int teacherID, int pageNumber, int rowCount) throws DAOException {
         return selectAllByStatement(SELECT_ALL_FINISHED_TEACHER_COURSES,
                 String.valueOf(studentID),
                 String.valueOf(teacherID),
@@ -261,14 +262,14 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public int selectAllFinishedTeacherCoursesCount(int studentID, int teacherID) throws Exception {
+    public int selectAllFinishedTeacherCoursesCount(int studentID, int teacherID) throws DAOException {
         return selectIntByStatement(SELECT_ALL_FINISHED_TEACHER_COURSES_COUNT,
                 String.valueOf(studentID),
                 String.valueOf(teacherID));
     }
 
     @Override
-    public int selectCourseCount() throws Exception {
+    public int selectCourseCount() throws DAOException {
         return selectIntByStatement(SELECT_ALL_COURSES_COUNT);
     }
 }

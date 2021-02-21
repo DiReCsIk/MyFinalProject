@@ -14,7 +14,7 @@
         <main>
             <header>
                 <h1 class="h1Style">
-                    My courses
+                    <fmt:message key="studentCourses.header"/>
                 </h1>
             </header>
             <form id="courseForm" action="Controller" method="get">
@@ -38,13 +38,13 @@
             </form>
             <div class="container">
                 <div class="courseList">
-                    <a href="Controller?command=getStudentCourses&pageNumber=1&courseType=notStarted&sortBy=${sortBy}">NOT STARTED</a>
-                    <a href="Controller?command=getStudentCourses&pageNumber=1&courseType=inProgress&sortBy=${sortBy}">IN PROGRESS</a>
-                    <a href="Controller?command=getStudentCourses&pageNumber=1&courseType=finished&sortBy=${sortBy}">FINISHED</a>
+                    <a href="Controller?command=getStudentCourses&pageNumber=1&courseType=notStarted&sortBy=${sortBy}"><fmt:message key="studentCourses.notStarted"/></a>
+                    <a href="Controller?command=getStudentCourses&pageNumber=1&courseType=inProgress&sortBy=${sortBy}"><fmt:message key="studentCourses.inProgress"/></a>
+                    <a href="Controller?command=getStudentCourses&pageNumber=1&courseType=finished&sortBy=${sortBy}"><fmt:message key="studentCourses.finished"/></a>
                 </div>
                 <div class="selectTeachers" id="selectTeachers">
                     <c:if test="${courseType eq 'finished'}">
-                        <p>Teacher</p>
+                        <p><fmt:message key="studentCourses.paragraph"/></p>
                         <label>
                             <select id="select" onchange="changeTeacher()">
                                 <c:choose>
@@ -53,7 +53,7 @@
                                         <option>${teacherNameAndSurname}</option>
                                     </c:when>
                                 </c:choose>
-                                <option>All teachers</option>
+                                <option><fmt:message key="studentCourses.selectDefault"/></option>
                                 <c:forEach items="${teachers}" var="teacher" varStatus="i">
                                     <c:if test="${teacher ne teacherNameAndSurname}">
                                         <option id="${teachersID.get(i.index)}">${teacher}</option>
@@ -66,7 +66,7 @@
                 <c:choose>
                     <c:when test="${courseList.size() eq 0}">
                         <script>noCourses()</script>
-                        <p class="emptyTableText">You have no courses in this category :c</p>
+                        <p class="emptyTableText"><fmt:message key="studentCourses.emptyTable"/></p>
                     </c:when>
                     <c:otherwise>
                         <tag:fillCourseTable courseList="${courseList}" teacherData="${teacherData}"

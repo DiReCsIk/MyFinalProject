@@ -1,17 +1,17 @@
 body{
-    height: 120%;
+    height: 113%;
 }
 .container {
     text-align: center;
     font-size: 24px;
-    position: absolute;
     margin-left: 6%;
     margin-right: 8%;
+    margin-top: 2%;
     line-height: 1.4;
     background-color: #eeeeee;
     padding: 1.2rem 1rem 2%;
     width: 87%;
-    height: 84%;
+    height: 78%;
     box-shadow: 0 10px 40px -10px white;
     border-radius: 32px;
 }
@@ -89,14 +89,13 @@ td {
 
 h1 {
     cursor: default;
-    position: absolute;
     color: #00adb5;
     font-family: 'Rouge Script', cursive;
     font-size: 76px;
     font-weight: normal;
     line-height: 48px;
-    margin-top: 4%;
-    margin-left: 31%;
+    margin-top: 3%;
+    text-align: center;
     text-shadow: 1px 1px 2px white;
 }
 
@@ -124,5 +123,5 @@ tr:last-child td:nth-last-child(3) {
 }
 .exception{
     color: red;
-    margin-top: -42%;
+    margin-top: -45%;
 }

@@ -15,12 +15,12 @@
         <main>
             <div class="container">
                 <header>
-                    <h1 id="firstElem" class="h1Style">AVAILABLE COURSES</h1>
+                    <h1 id="firstElem" class="h1Style"><fmt:message key="availableCourses.header"/></h1>
                 </header>
                 <form id="courseForm" action="Controller" method="get">
                     <label>
                         <input hidden name="command" value="getAvailableCourses">
-                        <input hidden name="pageNumber" value="1">
+                        <input hidden name="pageNumber" value="${pageNumber}">
                         <input hidden id="courseName" name="courseName">
                         <input id="sortBy" hidden name="sortBy" value="${sortBy}">
                     </label>
@@ -32,7 +32,7 @@
                     </label>
                 </form>
                 <div class="selectCourses" id="selectTeachers">
-                    <p>Course name</p>
+                    <p><fmt:message key="availableCourses.courseName"/></p>
                     <label>
                         <select id="select" onchange="changeCourse()">
                             <c:choose>
@@ -40,7 +40,7 @@
                                     <option>${courseName}</option>
                                 </c:when>
                             </c:choose>
-                            <option>All courses</option>
+                            <option><fmt:message key="availableCourses.selectDefault"/></option>
                             <c:forEach items="${coursesSelectName}" var="name" varStatus="i">
                                 <c:if test="${name ne courseName}"><option>${name}</option></c:if>
                             </c:forEach>
@@ -50,7 +50,7 @@
                 <c:choose>
                     <c:when test="${courseList.size() eq 0}">
                         <script>document.getElementById("selectTeachers").style.display = 'none';</script>
-                        <p class="emptyTableText">There are no courses here :c</p>
+                        <p class="emptyTableText"><fmt:message key="availableCourses.emptyTable"/></p>
                     </c:when>
                     <c:otherwise>
                         <tag:fillCourseTable courseList="${courseList}" teacherData="${teacherData}" courseType="available"

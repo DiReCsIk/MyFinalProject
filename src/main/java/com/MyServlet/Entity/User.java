@@ -40,4 +40,27 @@ public class User extends Entity implements Serializable {
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
+
+    @Override
+    public int hashCode() {
+        return 47 * getId() + getEmail().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof User)) {
+            return false;
+        }
+        if (this == other) {
+            return true;
+        }
+        User otherUser = (User) other;
+        return this.getId() == otherUser.getId() && this.getEmail().equals(otherUser.getEmail()) && this.getPassword().equals(otherUser.getPassword());
+    }
+
+    @Override
+    public String toString() {
+        return "User{ email='" + getEmail() + ", id=" + getId() + '}';
+    }
+
 }

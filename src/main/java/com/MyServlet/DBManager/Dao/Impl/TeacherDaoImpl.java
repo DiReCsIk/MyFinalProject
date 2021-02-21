@@ -5,6 +5,7 @@ import com.MyServlet.DBManager.Dao.TeacherDao;
 import com.MyServlet.Entity.Administrator;
 import com.MyServlet.Entity.Student;
 import com.MyServlet.Entity.Teacher;
+import com.MyServlet.Exception.DAOException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -44,24 +45,24 @@ public class TeacherDaoImpl extends AbstractDao<Teacher> implements TeacherDao {
     }
 
     @Override
-    public Collection<Teacher> getAllEntities() throws Exception {
+    public Collection<Teacher> getAllEntities() throws DAOException {
         return selectAllByStatement(SELECT_ALL_TEACHERS);
     }
 
     @Override
-    public Teacher selectEntityByID(int teacherID) throws Exception {
+    public Teacher selectEntityByID(int teacherID) throws DAOException {
         return selectByStatement(SELECT_TEACHER_BY_ID,
                 String.valueOf(teacherID));
     }
 
     @Override
-    public Teacher selectTeacherByUserID(int userID) throws Exception {
+    public Teacher selectTeacherByUserID(int userID) throws DAOException {
         return selectByStatement(SELECT_TEACHER_BY_USER_ID,
                 String.valueOf(userID));
     }
 
     @Override
-    public Map<String, ArrayList<String>> selectStudentsDataOnTeacherCourse(int teacherID, int pageNumber, int rowCount) throws Exception {
+    public Map<String, ArrayList<String>> selectStudentsDataOnTeacherCourse(int teacherID, int pageNumber, int rowCount) throws DAOException {
         String[] listArgs = new String[]{"name", "surName", "birthDay", "mark", "id"};
         return selectMapByStatement(SELECT_STUDENTS_DATA_ON_TEACHER_COURSE,
                 listArgs,
@@ -71,30 +72,30 @@ public class TeacherDaoImpl extends AbstractDao<Teacher> implements TeacherDao {
     }
 
     @Override
-    public List<Integer> selectTeacherStudentsID(int teacherID) throws Exception {
+    public List<Integer> selectTeacherStudentsID(int teacherID) throws DAOException {
         return selectIntegerListByStatement(SELECT_TEACHER_STUDENTS_ID,
                 String.valueOf(teacherID));
     }
 
     @Override
-    public int selectTeacherCourseID(int teacherID) throws Exception {
+    public int selectTeacherCourseID(int teacherID) throws DAOException {
         return selectIntByStatement(SELECT_TEACHER_COURSE_ID,
                 String.valueOf(teacherID));
     }
 
     @Override
-    public String selectTeacherNameAndSurnameByID(int teacherID) throws Exception {
+    public String selectTeacherNameAndSurnameByID(int teacherID) throws DAOException {
         return selectStringByStatement(SELECT_TEACHER_NAME_AND_SURNAME_BY_ID,
                 String.valueOf(teacherID));
     }
 
     @Override
-    public int getAllTeachersCount() throws Exception {
+    public int getAllTeachersCount() throws DAOException {
         return selectIntByStatement(SELECT_ALL_TEACHERS_COUNT);
     }
 
     @Override
-    public void raiseToTeacher(Student student) throws Exception {
+    public void raiseToTeacher(Student student) throws DAOException {
         updateByStatement(INSERT_TEACHER,
                 student.getName(),
                 student.getSurName(),
@@ -103,7 +104,7 @@ public class TeacherDaoImpl extends AbstractDao<Teacher> implements TeacherDao {
     }
 
     @Override
-    public void declineToTeacher(Administrator administrator) throws Exception {
+    public void declineToTeacher(Administrator administrator) throws DAOException {
         updateByStatement(INSERT_TEACHER,
                 administrator.getName(),
                 administrator.getSurName(),
@@ -112,14 +113,14 @@ public class TeacherDaoImpl extends AbstractDao<Teacher> implements TeacherDao {
     }
 
     @Override
-    public Map<String, ArrayList<String>> selectAllTeachersNameAndSurname() throws Exception {
+    public Map<String, ArrayList<String>> selectAllTeachersNameAndSurname() throws DAOException {
         String[] listArgs = new String[]{"id", "data"};
         return selectMapByStatement(SELECT_ALL_FREE_TEACHERS_NAME_AND_SURNAME,
                 listArgs);
     }
 
     @Override
-    public Map<String, ArrayList<String>> selectFinishedTeachersData(int studentID) throws Exception {
+    public Map<String, ArrayList<String>> selectFinishedTeachersData(int studentID) throws DAOException {
         String[] listArgs = new String[]{"data", "id"};
         return selectMapByStatement(SELECT_ALL_FINISHED_TEACHERS_DATA,
                 listArgs,
@@ -127,17 +128,16 @@ public class TeacherDaoImpl extends AbstractDao<Teacher> implements TeacherDao {
     }
 
     @Override
-    public void updateEntity(Teacher teacher) throws Exception {
+    public void updateEntity(Teacher teacher) throws DAOException {
         updateByStatement(UPDATE_TEACHER,
                 teacher.getName(),
                 teacher.getSurName(),
                 String.valueOf(teacher.getBirthDate()),
-                String.valueOf(teacher.getUserID()),
                 String.valueOf(teacher.getId()));
     }
 
     @Override
-    public void insertEntity(Teacher teacher) throws Exception {
+    public void insertEntity(Teacher teacher) throws DAOException {
         updateByStatement(INSERT_TEACHER,
                 teacher.getName(),
                 teacher.getSurName(),
@@ -146,7 +146,7 @@ public class TeacherDaoImpl extends AbstractDao<Teacher> implements TeacherDao {
     }
 
     @Override
-    public void deleteEntityByID(int teacherID) throws Exception {
+    public void deleteEntityByID(int teacherID) throws DAOException {
         updateByStatement(DELETE_TEACHER_BY_ID,
                 String.valueOf(teacherID));
     }

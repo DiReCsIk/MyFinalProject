@@ -1,17 +1,15 @@
 body{
-    height: 106%;
+    height: 96%;
 }
 .h1Style {
     cursor: default;
-    position: absolute;
     color: #00adb5;
     font-family: 'Rouge Script', cursive;
     font-size: 86px;
     font-weight: normal;
     line-height: 48px;
     margin-top: 4%;
-    margin-left: 34%;
-    margin-bottom: 10%;
+    text-align: center;
     text-shadow: 1px 1px 2px white;
 }
 .h2Style {
@@ -31,7 +29,6 @@ body{
     position: absolute;
     margin-left: 7%;
     margin-right: 8%;
-    margin-top: 12%;
     line-height: 1.4;
     background-color: #eeeeee;
     padding: 1.2rem 1rem 2%;

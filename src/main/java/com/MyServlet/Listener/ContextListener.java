@@ -13,10 +13,8 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        URL mySource = ContextListener.class.getProtectionDomain().getCodeSource().getLocation();
         ServletContext context = servletContextEvent.getServletContext();
         String rootPath = context.getRealPath("");
         System.setProperty("app.root", rootPath);
-
     }
 }

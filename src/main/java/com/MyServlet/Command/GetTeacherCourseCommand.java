@@ -8,6 +8,10 @@ import com.MyServlet.DBManager.Service.StudentService;
 import com.MyServlet.DBManager.Service.TeacherService;
 import com.MyServlet.Entity.Teacher;
 import com.MyServlet.Entity.User;
+import com.MyServlet.Exception.CommandException;
+import com.MyServlet.Exception.ConnectionException;
+import com.MyServlet.Exception.ServiceException;
+import com.MyServlet.Util.Pages;
 import com.MyServlet.Util.UserRole;
 import org.apache.log4j.Logger;
 
@@ -21,7 +25,7 @@ public class GetTeacherCourseCommand implements Command {
     private static final Logger log = Logger.getLogger(GetTeacherCourseCommand.class.getName());
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In GetTeacherCourseCommand");
         HttpSession session = request.getSession();
         TeacherService teacherService = new TeacherServiceImpl();
@@ -29,32 +33,30 @@ public class GetTeacherCourseCommand implements Command {
         User teacher = (User) session.getAttribute("user");
         if (teacher == null || !teacher.getUserRole().equals(UserRole.TEACHER)) {
             log.info("Fail. User is not a teacher");
-            return "/page/main.jsp";
+            return Pages.MAIN_PAGE;
         }
-        int pageNumber = 1;
-        if (request.getParameter("pageNumber") != null) {
-            pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-        }
-        if (pageNumber <= 0) {
-            log.info("Page number < 0. Resetting page number to 0");
-            pageNumber = 1;
-        }
+        int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));
+        int rowCount = session.getAttribute("rowCount") == null ? 5 : (int) session.getAttribute("rowCount");
         CourseService courseService = new CourseServiceImpl();
-        log.info("Getting teacher course data");
-        int courseID = teacherService.selectTeacherCourseID(teacher.getId());
-        int rowCount = (int) session.getAttribute("rowCount");
-        Map<String, ArrayList<String>> map = teacherService.selectStudentsDataOnTeacherCourse(teacher.getId(), pageNumber, rowCount);
-        int studentsCount = courseService.selectStudentsCountOnCourse(courseID);
-        int maxPage = (int) Math.ceil((double) studentsCount / rowCount);
-        session.setAttribute("rowCount", 5);
-        request.setAttribute("studentsName", map.get("name"));
-        request.setAttribute("studentsSurname", map.get("surName"));
-        request.setAttribute("studentsBirthDay", map.get("birthDay"));
-        request.setAttribute("studentsMark", map.get("mark"));
-        request.setAttribute("studentsID", map.get("id"));
-        request.setAttribute("pageNumber", pageNumber);
-        request.setAttribute("maxPage", maxPage);
-        log.info("GetTeacherCourseCommand successful");
-        return "/page/teacherCourse.jsp";
+        try {
+            log.info("Getting teacher course data");
+            int courseID = teacherService.selectTeacherCourseID(teacher.getId());
+            Map<String, ArrayList<String>> map = teacherService.selectStudentsDataOnTeacherCourse(teacher.getId(), pageNumber, rowCount);
+            int studentsCount = courseService.selectStudentsCountOnCourse(courseID);
+            int maxPage = (int) Math.ceil((double) studentsCount / rowCount);
+            session.setAttribute("rowCount", rowCount);
+            request.setAttribute("studentsName", map.get("name"));
+            request.setAttribute("studentsSurname", map.get("surName"));
+            request.setAttribute("studentsBirthDay", map.get("birthDay"));
+            request.setAttribute("studentsMark", map.get("mark"));
+            request.setAttribute("studentsID", map.get("id"));
+            request.setAttribute("pageNumber", pageNumber);
+            request.setAttribute("maxPage", maxPage);
+            log.info("GetTeacherCourseCommand successful");
+        } catch (ServiceException serviceException) {
+            log.error("Error!", serviceException);
+            throw new CommandException(serviceException.getMessage(), serviceException);
+        }
+        return Pages.TEACHER_COURSE_PAGE;
     }
 }

@@ -6,10 +6,10 @@
     <body>
     <ul class="list">
         <li>
-            <a href="${pageContext.request.contextPath}/Controller?command=getUserInfo">Войти</a><hr>
+            <a href="${pageContext.request.contextPath}/Controller?command=getUserInfo"><fmt:message key="menu.signInPage"/></a><hr>
         </li>
         <li>
-        <a href="../../page/signUp.jsp">Зарегистрироваться</a><hr>
+        <a href="../../page/signUp.jsp"><fmt:message key="menu.signUpPage"/></a><hr>
         </li>
     </ul>
     </body>

@@ -1,6 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.MyServlet.Util.UserRole" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${lang}"/>
+<fmt:setBundle basename="localization/localization"/>
 <html>
 <head>
     <title></title>
@@ -23,17 +26,17 @@
             </c:otherwise>
         </c:choose>
         <li>
-            <a href="../page/main.jsp" style="margin-top: 4rem">Главная страница</a>
+            <a href="../page/main.jsp" style="margin-top: 4rem"><fmt:message key="menu.mainPage"/><%--Главная страница--%></a>
             <hr>
         </li>
         <c:if test="${sessionScope.user == null || sessionScope.user.userRole eq UserRole.STUDENT}">
             <li>
-                <a href="${pageContext.request.contextPath}/Controller?command=getAvailableCourses">Курсы</a>
+                <a href="${pageContext.request.contextPath}/Controller?command=getAvailableCourses"><fmt:message key="menu.coursePage"/></a>
                 <hr>
             </li>
         </c:if>
         <li>
-            <a href="#">О нас</a>
+            <a href="#"><fmt:message key="menu.aboutUsPage"/><%--О нас--%></a>
             <hr>
         </li>
     </ul>
@@ -50,15 +53,6 @@
     </div>--%>
 
 </nav>
-
-<div class="dropDown">
-    <button class="dropButton">Выбор языка</button>
-    <div class="dropDown-content">
-        <a href="#">RU</a>
-        <a href="#">EN</a>
-        <a href="#">UA</a>
-    </div>
-</div>
 <span onclick="openNav()" class="openButton">></span>
 <script src="../script/Menu.js"></script>
 </body>

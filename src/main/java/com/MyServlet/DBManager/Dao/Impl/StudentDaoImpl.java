@@ -4,6 +4,7 @@ import com.MyServlet.DBManager.Dao.AbstractDao;
 import com.MyServlet.DBManager.Dao.StudentDao;
 import com.MyServlet.Entity.Student;
 import com.MyServlet.Entity.Teacher;
+import com.MyServlet.Exception.DAOException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,12 +18,12 @@ public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
     private static final String SELECT_STUDENT_BY_USER_ID = "SELECT * FROM STUDENT WHERE USER_ID = ?;";
     private static final String SELECT_ALL_STUDENTS = "SELECT * FROM STUDENT;";
     private static final String UPDATE_STUDENT = "UPDATE STUDENT SET STUDENT_NAME = ?, " +
-            "STUDENT_SURNAME = ?, STUDENT_AVERAGE_RATING = ?, STUDENT_BAN_STATUS = ?, " +
+            "STUDENT_SURNAME = ?, STUDENT_BAN_STATUS = ?, " +
             "STUDENT_BIRTH_DATE = ? WHERE STUDENT_ID = ?;";
     private static final String SET_BAN_STATUS_STUDENT = "UPDATE STUDENT SET STUDENT_BAN_STATUS = ? WHERE USER_ID = ?;";
     private static final String DELETE_STUDENT_BY_ID = "DELETE FROM STUDENT WHERE STUDENT_ID = ?;";
-    private static final String INSERT_STUDENT = "INSERT INTO STUDENT (STUDENT_NAME, STUDENT_SURNAME, STUDENT_AVERAGE_RATING," +
-            "STUDENT_BAN_STATUS, STUDENT_BIRTH_DATE, USER_ID) VALUES (?, ?, ?, ?, ?, ?);";
+    private static final String INSERT_STUDENT = "INSERT INTO STUDENT (STUDENT_NAME, STUDENT_SURNAME, " +
+            "STUDENT_BAN_STATUS, STUDENT_BIRTH_DATE, USER_ID) VALUES (?, ?, ?, ?, ?);";
     private static final String SELECT_STUDENT_BY_EMAIL = "SELECT * FROM STUDENT WHERE USER_ID IN";
 
     public StudentDaoImpl(Connection connection) {
@@ -30,47 +31,46 @@ public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
     }
 
     @Override
-    public Collection<Student> getAllEntities() throws Exception {
+    public Collection<Student> getAllEntities() throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENTS);
     }
 
     @Override
-    public Student selectEntityByID(int studentID) throws Exception {
+    public Student selectEntityByID(int studentID) throws DAOException {
         return selectByStatement(SELECT_STUDENT_BY_ID,
                 String.valueOf(studentID));
     }
 
     @Override
-    public Student selectStudentByUserID(int userID) throws Exception {
+    public Student selectStudentByUserID(int userID) throws DAOException {
         return selectByStatement(SELECT_STUDENT_BY_USER_ID,
                 String.valueOf(userID));
     }
 
     @Override
-    public int getAllStudentsCount() throws Exception {
+    public int getAllStudentsCount() throws DAOException {
         return selectIntByStatement(SELECT_ALL_STUDENTS_COUNT);
     }
 
     @Override
-    public void banStudent(int userID) throws Exception {
+    public void banStudent(int userID) throws DAOException {
         updateByStatement(SET_BAN_STATUS_STUDENT,
                 "1",
                 String.valueOf(userID));
     }
 
     @Override
-    public void unbanStudent(int userID) throws Exception {
+    public void unbanStudent(int userID) throws DAOException {
         updateByStatement(SET_BAN_STATUS_STUDENT,
                 "0",
                 String.valueOf(userID));
     }
 
     @Override
-    public void declineToStudent(Teacher teacher) throws Exception {
+    public void declineToStudent(Teacher teacher) throws DAOException {
         updateByStatement(INSERT_STUDENT,
                 teacher.getName(),
                 teacher.getSurName(),
-                "0",
                 "0",
                 String.valueOf(teacher.getBirthDate()),
                 String.valueOf(teacher.getUserID())
@@ -78,7 +78,7 @@ public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
     }
 
     @Override
-    public void updateEntity(Student student) throws Exception {
+    public void updateEntity(Student student) throws DAOException {
         updateByStatement(UPDATE_STUDENT,
                 student.getName(),
                 student.getSurName(),
@@ -89,7 +89,7 @@ public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
     }
 
     @Override
-    public void insertEntity(Student student) throws Exception {
+    public void insertEntity(Student student) throws DAOException {
         updateByStatement(INSERT_STUDENT,
                 student.getName(),
                 student.getSurName(),
@@ -100,7 +100,7 @@ public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
     }
 
     @Override
-    public void deleteEntityByID(int studentID) throws Exception {
+    public void deleteEntityByID(int studentID) throws DAOException {
         updateByStatement(DELETE_STUDENT_BY_ID,
                 String.valueOf(studentID));
     }

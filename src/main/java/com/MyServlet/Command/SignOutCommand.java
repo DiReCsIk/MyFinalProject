@@ -1,5 +1,7 @@
 package com.MyServlet.Command;
 
+import com.MyServlet.Exception.CommandException;
+import com.MyServlet.Util.Pages;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.Cookie;
@@ -25,6 +27,6 @@ public class SignOutCommand implements Command {
             }
         }
         log.info("SignOutCommand successful");
-        return "/page/main.jsp";
+        return Pages.MAIN_PAGE;
     }
 }

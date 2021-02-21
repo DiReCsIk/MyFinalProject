@@ -16,22 +16,22 @@
         <main>
             <header>
                 <h1 class="h1Style">
-                    My course
+                    <fmt:message key="teacherCourse.header"/>
                 </h1>
             </header>
             <div class="container">
                 <header>
                     <h2 class="h2Style">
-                        Здравствуйте, ${user.name}, на этой странице вы можете увидить список студентов на вашем курсе и всю
-                        необходимую Вам информацию о них. Здесь же - вы можете выставить их успеваемость.
+                        <fmt:message key="teacherCourse.welcome"/> ${user.name}, <fmt:message key="teacherCourse.secondHeader"/>
                     </h2>
                     <h3 class="h3Style">
-                        Чтобы выставить успеваемость - нажмите по значению в колонке оценки, впишите необходимое число (0-100).
+                        <fmt:message key="teacherCourse.thirdHeader"/>
                     </h3>
                 </header>
                 <form id="studentSetMark" action="Controller" method="post">
                     <label>
                         <input hidden name="command" value="setStudentMarkCommand">
+                        <input hidden name="pageNumber" value="${pageNumber}">
                         <input id="studentID" hidden name="studentID">
                         <input id="mark" hidden name="newMark">
                     </label>
@@ -39,16 +39,16 @@
                 <div class="courseTable">
                     <c:choose>
                         <c:when test="${studentsName.size() eq 0}">
-                            <p class="emptyTableText">There are no students on your course :c</p>
+                            <p class="emptyTableText"><fmt:message key="teacherCourse.emptyTable"/></p>
                         </c:when>
                         <c:otherwise>
                             <table id="studentTable">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Last name</th>
-                                        <th>Birthday</th>
-                                        <th>Mark</th>
+                                        <th><fmt:message key="teacherCourse.name"/></th>
+                                        <th><fmt:message key="teacherCourse.surName"/></th>
+                                        <th><fmt:message key="teacherCourse.birthDate"/></th>
+                                        <th><fmt:message key="teacherCourse.mark"/></th>
                                     </tr>
                                 </thead>
                                 <tbody>

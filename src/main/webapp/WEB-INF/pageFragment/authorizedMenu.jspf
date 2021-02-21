@@ -8,35 +8,35 @@
     <body>
     <ul class="list">
         <li>
-        <a href="#">Личный кабинет</a><hr>
+        <a href="#"><fmt:message key="menu.personalArea"/></a><hr>
             <ul>
                 <c:choose>
                     <c:when test="${sessionScope.user.userRole.equals(UserRole.ADMINISTRATOR)}">
                         <li>
-                            <a href="${pageContext.request.contextPath}/Controller?command=getStudentsInfo">&bull; Управление пользователями</a><hr>
+                            <a href="${pageContext.request.contextPath}/Controller?command=getStudentsInfo">&bull; <fmt:message key="menu.userManagePage"/></a><hr>
                         </li>
                         <li>
-                            <a href="${pageContext.request.contextPath}/Controller?command=getAdminCourses">&bull; Управление курсами</a><hr>
+                            <a href="${pageContext.request.contextPath}/Controller?command=getAdminCourses">&bull; <fmt:message key="menu.courseManagePage"/></a><hr>
                         </li>
                     </c:when>
                     <c:when test="${sessionScope.user.userRole.equals(UserRole.TEACHER)}">
                         <li>
-                            <a href="${pageContext.request.contextPath}/Controller?command=getTeacherCourseInfo">&bull; Мой курс</a><hr>
+                            <a href="${pageContext.request.contextPath}/Controller?command=getTeacherCourseInfo">&bull; <fmt:message key="menu.myCoursePage"/></a><hr>
                         </li>
                     </c:when>
                     <c:otherwise>
                         <li>
-                            <a href="${pageContext.request.contextPath}/Controller?command=getStudentCourses">&bull; Мои курсы</a><hr>
+                            <a href="${pageContext.request.contextPath}/Controller?command=getStudentCourses">&bull; <fmt:message key="menu.myCoursesPage"/></a><hr>
                         </li>
                     </c:otherwise>
                 </c:choose>
                 <li>
-                    <a href="${pageContext.request.contextPath}/page/myData.jsp">&bull; Мои данные</a><hr>
+                    <a href="${pageContext.request.contextPath}/page/myData.jsp">&bull; <fmt:message key="menu.myDataPage"/></a><hr>
                 </li>
             </ul>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/Controller?command=signOut">Выйти</a><hr>
+            <a href="${pageContext.request.contextPath}/Controller?command=signOut"><fmt:message key="menu.signOutPage"/></a><hr>
         </li>
     </ul>
     </body>
