@@ -3,20 +3,18 @@ package com.MyServlet.DBManager.Dao;
 import com.MyServlet.Entity.Course;
 import com.MyServlet.Exception.DAOException;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 public interface CourseDao extends DefaultDao<Course> {
-    Collection<Course> selectAllStudentAvailableCourses(int pageNumber, int rowCount, String courseName) throws DAOException;
+    Collection<Course> selectAllStudentAvailableCourses(String courseName) throws DAOException;
 
-    Collection<Course> selectAllStudentAvailableCoursesRegistered(int studentID, int pageNumber, int rowCount, String courseName) throws DAOException;
+    Collection<Course> selectAllAvailableCourses(int studentID, String courseName) throws DAOException;
 
-    Collection<Course> selectAllStudentFinishedCourses(int studentID, int pageNumber, int rowCount) throws DAOException;
+    Collection<Course> selectAllStudentFinishedCourses(int studentID) throws DAOException;
 
-    Collection<Course> selectAllStudentInProgressCourses(int studentID, int pageNumber, int rowCount) throws DAOException;
+    Collection<Course> selectAllStudentInProgressCourses(int studentID) throws DAOException;
 
-    Collection<Course> selectAllStudentNotStartedCourses(int studentID, int pageNumber, int rowCount) throws DAOException;
+    Collection<Course> selectAllStudentNotStartedCourses(int studentID) throws DAOException;
 
     Collection<Course> selectAllFinishedTeacherCourses(int studentID, int teacherID, int pageNumber, int rowCount) throws DAOException;
 

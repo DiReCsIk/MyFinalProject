@@ -11,9 +11,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     private static final String SELECT_COURSE_BY_ID = "SELECT * FROM COURSE WHERE COURSE_ID = ?;";
@@ -24,17 +22,17 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
             new Date(new java.util.Date().getTime()) + "' AND STUDENT_ID = ?) AS C;";
     private static final String SELECT_ALL_STUDENT_FINISHED_COURSES = "SELECT * FROM COURSE INNER JOIN " +
             "STUDENT_COURSE USING (COURSE_ID) WHERE COURSE_END_DATE < '" + new Date(new java.util.Date().getTime()) +
-            "' AND STUDENT_ID = ? LIMIT ? OFFSET ?";
+            "' AND STUDENT_ID = ?;";
     private static final String SELECT_ALL_STUDENT_NOT_STARTED_COURSES_COUNT = "SELECT COUNT(*) FROM (SELECT * FROM " +
             "COURSE INNER JOIN STUDENT_COURSE USING (COURSE_ID) WHERE COURSE_START_DATE > '" +
             new Date(new java.util.Date().getTime()) + "' AND STUDENT_ID = ?) AS C;";
     private static final String SELECT_ALL_STUDENT_NOT_STARTED_COURSES = "SELECT * FROM COURSE INNER JOIN " +
             "STUDENT_COURSE USING (COURSE_ID) WHERE COURSE_START_DATE > '" + new Date(new java.util.Date().getTime()) +
-            "' AND STUDENT_ID = ? LIMIT ? OFFSET ?";
+            "' AND STUDENT_ID = ?;";
     private static final String SELECT_ALL_STUDENT_AVAILABLE_COURSES_COUNT = "SELECT COUNT(*) FROM COURSE WHERE " +
             "COURSE_START_DATE > '" + new Date(new java.util.Date().getTime()) + "' AND COURSE_NAME LIKE ?;";
     private static final String SELECT_ALL_STUDENT_AVAILABLE_COURSES = "SELECT * FROM COURSE WHERE COURSE_START_DATE > '"
-            + new Date(new java.util.Date().getTime()) + "' AND COURSE_NAME LIKE ? LIMIT ? OFFSET ?";
+            + new Date(new java.util.Date().getTime()) + "' AND COURSE_NAME LIKE ?";
     private static final String SELECT_ALL_STUDENT_IN_PROGRESS_COURSES_COUNT = "SELECT COUNT(*) FROM (SELECT * FROM " +
             "COURSE INNER JOIN STUDENT_COURSE USING (COURSE_ID) WHERE COURSE_START_DATE < '" +
             new Date(new java.util.Date().getTime()) + "' AND COURSE_END_DATE > '" +
@@ -42,10 +40,10 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     private static final String SELECT_ALL_STUDENT_IN_PROGRESS_COURSES = "SELECT * FROM COURSE INNER JOIN " +
             "STUDENT_COURSE USING (COURSE_ID) WHERE COURSE_START_DATE <= '" +
             new Date(new java.util.Date().getTime()) + "' AND COURSE_END_DATE > '" +
-            new Date(new java.util.Date().getTime()) + "' AND STUDENT_ID = ? LIMIT ? OFFSET ?";
+            new Date(new java.util.Date().getTime()) + "' AND STUDENT_ID = ?;";
     private static final String SELECT_ALL_STUDENT_AVAILABLE_COURSES_REGISTERED = "SELECT * FROM COURSE WHERE " +
             "COURSE_START_DATE > '" + new Date(new java.util.Date().getTime()) + "' AND COURSE_ID NOT IN " +
-            "(SELECT COURSE_ID FROM STUDENT_COURSE WHERE STUDENT_ID = ?)  AND COURSE_NAME LIKE ? LIMIT ? OFFSET ? ;";
+            "(SELECT COURSE_ID FROM STUDENT_COURSE WHERE STUDENT_ID = ?)  AND COURSE_NAME LIKE ?;";
     private static final String SELECT_ALL_STUDENT_AVAILABLE_COURSES_COUNT_REGISTERED = "SELECT " +
             "COUNT(*) FROM (SELECT * FROM COURSE WHERE COURSE_ID NOT IN (SELECT COURSE_ID FROM " +
             "STUDENT_COURSE WHERE  STUDENT_ID = ?) AND COURSE_START_DATE > '" +
@@ -135,44 +133,34 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public Collection<Course> selectAllStudentAvailableCourses(int pageNumber, int rowCount, String courseName) throws DAOException {
+    public Collection<Course> selectAllStudentAvailableCourses(String courseName) throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENT_AVAILABLE_COURSES,
-                courseName,
-                String.valueOf(rowCount),
-                String.valueOf(rowCount * (pageNumber - 1)));
+                courseName);
     }
 
     @Override
-    public Collection<Course> selectAllStudentAvailableCoursesRegistered(int studentID, int pageNumber, int rowCount, String courseName) throws DAOException {
+    public Collection<Course> selectAllAvailableCourses(int studentID, String courseName) throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENT_AVAILABLE_COURSES_REGISTERED,
                 String.valueOf(studentID),
-                courseName,
-                String.valueOf(rowCount),
-                String.valueOf(rowCount * (pageNumber - 1)));
+                courseName);
     }
 
     @Override
-    public Collection<Course> selectAllStudentFinishedCourses(int studentID, int pageNumber, int rowCount) throws DAOException {
+    public Collection<Course> selectAllStudentFinishedCourses(int studentID) throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENT_FINISHED_COURSES,
-                String.valueOf(studentID),
-                String.valueOf(rowCount),
-                String.valueOf(rowCount * (pageNumber - 1)));
+                String.valueOf(studentID));
     }
 
     @Override
-    public Collection<Course> selectAllStudentInProgressCourses(int studentID, int pageNumber, int rowCount) throws DAOException {
+    public Collection<Course> selectAllStudentInProgressCourses(int studentID) throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENT_IN_PROGRESS_COURSES,
-                String.valueOf(studentID),
-                String.valueOf(rowCount),
-                String.valueOf(rowCount * (pageNumber - 1)));
+                String.valueOf(studentID));
     }
 
     @Override
-    public Collection<Course> selectAllStudentNotStartedCourses(int studentID, int pageNumber, int rowCount) throws DAOException {
+    public Collection<Course> selectAllStudentNotStartedCourses(int studentID) throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENT_NOT_STARTED_COURSES,
-                String.valueOf(studentID),
-                String.valueOf(rowCount),
-                String.valueOf(rowCount * (pageNumber - 1)));
+                String.valueOf(studentID));
     }
 
     @Override
@@ -242,12 +230,12 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public Collection<String>  selectAllCoursesName() throws DAOException {
+    public Collection<String> selectAllCoursesName() throws DAOException {
         return selectStringListByStatement(SELECT_ALL_COURSES_AVAILABLE_NAME);
     }
 
     @Override
-    public Collection<String>  selectAllCoursesNameByStudentID(int studentID) throws DAOException {
+    public Collection<String> selectAllCoursesNameByStudentID(int studentID) throws DAOException {
         return selectStringListByStatement(SELECT_ALL_COURSES_AVAILABLE_NAME_BY_ID,
                 String.valueOf(studentID));
     }

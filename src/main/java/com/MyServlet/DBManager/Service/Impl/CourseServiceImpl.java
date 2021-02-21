@@ -110,14 +110,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Collection<Course> selectAllStudentAvailableCourses(int pageNumber, int rowCount, String courseName) throws ConnectionException, ServiceException {
-        log.info("In CourseServiceImpl (selectAllStudentAvailableCourses, pageNumber: " + pageNumber +
-                ", rowCount: " + rowCount + ", courseName: " + courseName + ")");
+    public Collection<Course> selectAllStudentAvailableCourses(String courseName) throws ConnectionException, ServiceException {
+        log.info("In CourseServiceImpl (selectAllStudentAvailableCourses, courseName: " + courseName + ")");
         try (DBConnection dbConnection = DBConnection.createConnection()) {
             log.info("Initializing CourseDao");
             CourseDao courseDao = new CourseDaoImpl(dbConnection.getConnection());
             log.info("Control transferring to Dao");
-            Collection<Course> collection = courseDao.selectAllStudentAvailableCourses(pageNumber, rowCount, courseName);
+            Collection<Course> collection = courseDao.selectAllStudentAvailableCourses(courseName);
             log.info("Closing connection");
             return collection;
         } catch (DAOException daoException) {
@@ -127,14 +126,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Collection<Course> selectAllStudentInProgressCourses(int studentID, int pageNumber, int rowCount) throws ConnectionException, ServiceException {
-        log.info("In CourseServiceImpl (selectAllStudentInProgressCourses, studentID: " + studentID +
-                ", pageNumber: " + pageNumber + ", rowCount: " + rowCount + ")");
+    public Collection<Course> selectAllStudentInProgressCourses(int studentID) throws ConnectionException, ServiceException {
+        log.info("In CourseServiceImpl (selectAllStudentInProgressCourses, studentID: " + studentID + ")");
         try (DBConnection dbConnection = DBConnection.createConnection()) {
             log.info("Initializing CourseDao");
             CourseDao courseDao = new CourseDaoImpl(dbConnection.getConnection());
             log.info("Control transferring to Dao");
-            Collection<Course> collection = courseDao.selectAllStudentInProgressCourses(studentID, pageNumber, rowCount);
+            Collection<Course> collection = courseDao.selectAllStudentInProgressCourses(studentID);
             log.info("Closing connection");
             return collection;
         } catch (DAOException daoException) {
@@ -144,14 +142,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Collection<Course> selectAllStudentFinishedCourses(int studentID, int pageNumber, int rowCount) throws ConnectionException, ServiceException {
-        log.info("In CourseServiceImpl (selectAllStudentFinishedCourses, studentID: " + studentID +
-                ", pageNumber: " + pageNumber + ", rowCount: " + rowCount + ")");
+    public Collection<Course> selectAllStudentFinishedCourses(int studentID) throws ConnectionException, ServiceException {
+        log.info("In CourseServiceImpl (selectAllStudentFinishedCourses, studentID: " + studentID + ")");
         try (DBConnection dbConnection = DBConnection.createConnection()) {
             log.info("Initializing CourseDao");
             CourseDao courseDao = new CourseDaoImpl(dbConnection.getConnection());
             log.info("Control transferring to Dao");
-            Collection<Course> collection = courseDao.selectAllStudentFinishedCourses(studentID, pageNumber, rowCount);
+            Collection<Course> collection = courseDao.selectAllStudentFinishedCourses(studentID);
             log.info("Closing connection");
             return collection;
         } catch (DAOException daoException) {
@@ -161,14 +158,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Collection<Course> selectAllStudentNotStartedCourses(int studentID, int pageNumber, int rowCount) throws ConnectionException, ServiceException {
-        log.info("In CourseServiceImpl (selectAllStudentNotStartedCourses, studentID: " + studentID +
-                ", pageNumber: " + pageNumber + ", rowCount: " + rowCount + ")");
+    public Collection<Course> selectAllStudentNotStartedCourses(int studentID) throws ConnectionException, ServiceException {
+        log.info("In CourseServiceImpl (selectAllStudentNotStartedCourses, studentID: " + studentID + ")");
         try (DBConnection dbConnection = DBConnection.createConnection()) {
             log.info("Initializing CourseDao");
             CourseDao courseDao = new CourseDaoImpl(dbConnection.getConnection());
             log.info("Control transferring to Dao");
-            Collection<Course> collection = courseDao.selectAllStudentNotStartedCourses(studentID, pageNumber, rowCount);
+            Collection<Course> collection = courseDao.selectAllStudentNotStartedCourses(studentID);
             log.info("Closing connection");
             return collection;
         } catch (DAOException daoException) {
@@ -178,49 +174,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Collection<Course> selectAllStudentAvailableCoursesRegistered(int studentID, int pageNumber, int rowCount, String courseName) throws ConnectionException, ServiceException {
-        log.info("In CourseServiceImpl (selectAllStudentAvailableCoursesRegistered, studentID: " + studentID +
-                ", pageNumber: " + pageNumber + ", rowCount: " + rowCount + " , courseName: +" + courseName + ")");
+    public Collection<Course> selectAllAvailableCourses(int studentID, String courseName) throws ConnectionException, ServiceException {
+        log.info("In CourseServiceImpl (selectAllStudentAvailableCoursesRegistered, studentID: " + studentID + " , courseName: " + courseName + ")");
         try (DBConnection dbConnection = DBConnection.createConnection()) {
             log.info("Initializing CourseDao");
             CourseDao courseDao = new CourseDaoImpl(dbConnection.getConnection());
             log.info("Control transferring to Dao");
-            Collection<Course> collection = courseDao.selectAllStudentAvailableCoursesRegistered(studentID, pageNumber, rowCount, courseName);
+            Collection<Course> collection = courseDao.selectAllAvailableCourses(studentID, courseName);
             log.info("Closing connection");
             return collection;
-        } catch (DAOException daoException) {
-            log.error("Error!", daoException);
-            throw new ServiceException(daoException.getMessage(), daoException);
-        }
-    }
-
-    @Override
-    public int selectAvailableCoursesCountRegistered(int studentID, String courseName) throws ConnectionException, ServiceException {
-        log.info("In CourseServiceImpl (selectAvailableCoursesCountRegistered, studentID: " + studentID +
-                ", courseName: " + courseName + ")");
-        try (DBConnection dbConnection = DBConnection.createConnection()) {
-            log.info("Initializing CourseDao");
-            CourseDao courseDao = new CourseDaoImpl(dbConnection.getConnection());
-            log.info("Control transferring to Dao");
-            int result = courseDao.selectAvailableCoursesCountRegistered(studentID, courseName);
-            log.info("Closing connection");
-            return result;
-        } catch (DAOException daoException) {
-            log.error("Error!", daoException);
-            throw new ServiceException(daoException.getMessage(), daoException);
-        }
-    }
-
-    @Override
-    public int selectAvailableCoursesCount(String courseName) throws ConnectionException, ServiceException {
-        log.info("In CourseServiceImpl (selectAvailableCoursesCount, courseName: " + courseName + ")");
-        try (DBConnection dbConnection = DBConnection.createConnection()) {
-            log.info("Initializing CourseDao");
-            CourseDao courseDao = new CourseDaoImpl(dbConnection.getConnection());
-            log.info("Control transferring to Dao");
-            int result = courseDao.selectAvailableCoursesCount(courseName);
-            log.info("Closing connection");
-            return result;
         } catch (DAOException daoException) {
             log.error("Error!", daoException);
             throw new ServiceException(daoException.getMessage(), daoException);

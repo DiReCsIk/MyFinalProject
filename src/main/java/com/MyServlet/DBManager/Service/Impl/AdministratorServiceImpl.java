@@ -1,6 +1,5 @@
 package com.MyServlet.DBManager.Service.Impl;
 
-import com.MyServlet.Command.UpdateUserInfoCommand;
 import com.MyServlet.DBManager.DBConnection;
 import com.MyServlet.DBManager.Dao.AdministratorDao;
 import com.MyServlet.DBManager.Dao.Impl.AdministratorDaoImpl;

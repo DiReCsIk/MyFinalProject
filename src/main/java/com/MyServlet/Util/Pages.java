@@ -1,7 +1,5 @@
 package com.MyServlet.Util;
 
-import com.MyServlet.Controller.Controller;
-
 public final class Pages {
     private Pages() {
     }

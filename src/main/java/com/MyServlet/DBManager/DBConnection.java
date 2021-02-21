@@ -1,12 +1,10 @@
 package com.MyServlet.DBManager;
 
-import com.MyServlet.DBManager.Service.Impl.AdministratorServiceImpl;
 import com.MyServlet.Exception.ConnectionException;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;

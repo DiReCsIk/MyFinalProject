@@ -8,7 +8,6 @@ import com.MyServlet.Exception.ConnectionException;
 import com.MyServlet.Exception.ServiceException;
 import com.MyServlet.Util.Pages;
 import com.MyServlet.Util.UserRole;
-import com.mysql.cj.Session;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;

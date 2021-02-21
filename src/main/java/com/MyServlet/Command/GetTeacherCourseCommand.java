@@ -2,11 +2,8 @@ package com.MyServlet.Command;
 
 import com.MyServlet.DBManager.Service.CourseService;
 import com.MyServlet.DBManager.Service.Impl.CourseServiceImpl;
-import com.MyServlet.DBManager.Service.Impl.StudentServiceImpl;
 import com.MyServlet.DBManager.Service.Impl.TeacherServiceImpl;
-import com.MyServlet.DBManager.Service.StudentService;
 import com.MyServlet.DBManager.Service.TeacherService;
-import com.MyServlet.Entity.Teacher;
 import com.MyServlet.Entity.User;
 import com.MyServlet.Exception.CommandException;
 import com.MyServlet.Exception.ConnectionException;

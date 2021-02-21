@@ -5,7 +5,6 @@ import com.MyServlet.DBManager.Service.Impl.CourseServiceImpl;
 import com.MyServlet.DBManager.Service.Impl.TeacherServiceImpl;
 import com.MyServlet.DBManager.Service.TeacherService;
 import com.MyServlet.Entity.Course;
-import com.MyServlet.Entity.Student;
 import com.MyServlet.Entity.User;
 import com.MyServlet.Exception.CommandException;
 import com.MyServlet.Exception.ConnectionException;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 public class GetAvailableCoursesCommand implements Command {
     private static final Logger log = Logger.getLogger(GetAvailableCoursesCommand.class.getName());
@@ -46,24 +44,23 @@ public class GetAvailableCoursesCommand implements Command {
         }
         String courseName = request.getParameter("courseName") == null ? "%" : request.getParameter("courseName");
         ArrayList<Course> courseList;
-        int courseCount;
         ArrayList<String> coursesNameList;
         try {
             if (student != null) {
                 log.info("Getting course list and count for signed in user");
                 coursesNameList = (ArrayList<String>) courseService.selectAllCoursesNameByStudentID(student.getId());
-                courseList = (ArrayList<Course>) courseService.selectAllStudentAvailableCoursesRegistered(student.getId(), pageNumber, rowCount, courseName);
-                courseCount = courseService.selectAvailableCoursesCountRegistered(student.getId(), courseName);
+                courseList = (ArrayList<Course>) courseService.selectAllAvailableCourses(student.getId(), courseName);
             } else {
                 log.info("Getting course list and count for not signed in user");
                 coursesNameList = (ArrayList<String>) courseService.selectAllCoursesName();
-                courseList = (ArrayList<Course>) courseService.selectAllStudentAvailableCourses(pageNumber, rowCount, courseName);
-                courseCount = courseService.selectAvailableCoursesCount(courseName);
+                courseList = (ArrayList<Course>) courseService.selectAllStudentAvailableCourses(courseName);
             }
+            int courseCount = courseList.size();
             log.info("Sorting course list");
             courseList = (ArrayList<Course>) Sorter.sortCourseList(courseList, sortBy);
+            ArrayList<Course> courseArrayList = new ArrayList<>(courseList.subList(rowCount * (pageNumber - 1), Math.min(courseList.size(), rowCount * (pageNumber - 1) + rowCount)));
             log.info("Getting teachersID");
-            for (Course course : courseList) {
+            for (Course course : courseArrayList) {
                 teachersID.add(course.getTeacherID());
             }
             session.setAttribute("rowCount", rowCount);
@@ -73,7 +70,7 @@ public class GetAvailableCoursesCommand implements Command {
             request.setAttribute("maxPage", (int) Math.ceil((double) courseCount / rowCount));
             request.setAttribute("pageNumber", pageNumber);
             request.setAttribute("courseType", "available");
-            request.setAttribute("courseList", courseList);
+            request.setAttribute("courseList", courseArrayList);
             request.setAttribute("sortBy", sortBy);
             log.info("GetAvailableCoursesCommand success");
         } catch (ServiceException serviceException) {

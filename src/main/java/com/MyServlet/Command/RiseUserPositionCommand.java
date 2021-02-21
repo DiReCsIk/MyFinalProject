@@ -6,7 +6,6 @@ import com.MyServlet.DBManager.Service.Impl.StudentServiceImpl;
 import com.MyServlet.DBManager.Service.Impl.TeacherServiceImpl;
 import com.MyServlet.DBManager.Service.StudentService;
 import com.MyServlet.DBManager.Service.TeacherService;
-import com.MyServlet.Entity.Student;
 import com.MyServlet.Entity.User;
 import com.MyServlet.Exception.CommandException;
 import com.MyServlet.Exception.ConnectionException;

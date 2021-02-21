@@ -5,7 +5,6 @@ import com.MyServlet.DBManager.Service.Impl.CourseServiceImpl;
 import com.MyServlet.DBManager.Service.Impl.TeacherServiceImpl;
 import com.MyServlet.DBManager.Service.TeacherService;
 import com.MyServlet.Entity.Course;
-import com.MyServlet.Entity.Student;
 import com.MyServlet.Entity.User;
 import com.MyServlet.Exception.CommandException;
 import com.MyServlet.Exception.ConnectionException;
@@ -13,7 +12,6 @@ import com.MyServlet.Exception.ServiceException;
 import com.MyServlet.Util.Pages;
 import com.MyServlet.Util.Sorter;
 import com.MyServlet.Util.UserRole;
-import com.mysql.cj.Session;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,29 +47,27 @@ public class GetCoursesCommand implements Command {
         String courseType = request.getParameter("courseType") == null ? "notStarted" : request.getParameter("courseType");
         ArrayList<Integer> teachersID = new ArrayList<>();
         ArrayList<Course> courseList;
-        int courseCount;
         try {
             log.info("Getting course list and course count");
             switch (courseType) {
                 case "notStarted":
                     log.info("Course type is 'not started'");
-                    courseList = (ArrayList<Course>) courseService.selectAllStudentNotStartedCourses(student.getId(), pageNumber, rowCount);
-                    courseCount = courseService.selectNotStartedCoursesCount(student.getId());
+                    courseList = (ArrayList<Course>) courseService.selectAllStudentNotStartedCourses(student.getId());
                     break;
                 case "finished":
                     log.info("Course type is 'finished'");
-                    courseList = (ArrayList<Course>) courseService.selectAllStudentFinishedCourses(student.getId(), pageNumber, rowCount);
-                    courseCount = courseService.selectFinishedCoursesCount(student.getId());
+                    courseList = (ArrayList<Course>) courseService.selectAllStudentFinishedCourses(student.getId());
                     break;
                 default:
                     log.info("Course type is 'in progress'");
-                    courseList = (ArrayList<Course>) courseService.selectAllStudentInProgressCourses(student.getId(), pageNumber, rowCount);
-                    courseCount = courseService.selectInProgressCoursesCount(student.getId());
+                    courseList = (ArrayList<Course>) courseService.selectAllStudentInProgressCourses(student.getId());
             }
             log.info("Sorting course list");
             courseList = (ArrayList<Course>) Sorter.sortCourseList(courseList, sortBy);
+            int courseCount = courseList.size();
             ArrayList<Integer> coursesID = new ArrayList<>();
-            for (Course course : courseList) {
+            ArrayList<Course> courseArrayList = new ArrayList<>(courseList.subList(rowCount * (pageNumber - 1), Math.min(courseList.size(), rowCount * (pageNumber - 1) + rowCount)));
+            for (Course course : courseArrayList) {
                 if (courseType.equals("finished")) {
                     coursesID.add(course.getId());
                 }
@@ -89,7 +85,7 @@ public class GetCoursesCommand implements Command {
             request.setAttribute("maxPage", (int) Math.ceil((double) courseCount / rowCount));
             request.setAttribute("pageNumber", pageNumber);
             request.setAttribute("courseType", courseType);
-            request.setAttribute("courseList", courseList);
+            request.setAttribute("courseList", courseArrayList);
             request.setAttribute("sortBy", sortBy);
             log.info("GetCoursesCommand successful");
         } catch (ServiceException serviceException) {

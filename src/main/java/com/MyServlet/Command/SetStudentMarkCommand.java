@@ -6,7 +6,6 @@ import com.MyServlet.DBManager.Service.Impl.StudentServiceImpl;
 import com.MyServlet.DBManager.Service.Impl.TeacherServiceImpl;
 import com.MyServlet.DBManager.Service.StudentService;
 import com.MyServlet.DBManager.Service.TeacherService;
-import com.MyServlet.Entity.Teacher;
 import com.MyServlet.Entity.User;
 import com.MyServlet.Exception.CommandException;
 import com.MyServlet.Exception.ConnectionException;
@@ -18,7 +17,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 
 public class SetStudentMarkCommand implements Command {
     private static final Logger log = Logger.getLogger(SetStudentMarkCommand.class.getName());

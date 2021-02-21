@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public interface CourseService extends DefaultService<Course> {
-    Collection<Course> selectAllStudentAvailableCourses(int pageNumber, int rowCount, String courseName) throws ConnectionException, ServiceException;
+    Collection<Course> selectAllStudentAvailableCourses(String courseName) throws ConnectionException, ServiceException;
 
-    Collection<Course> selectAllStudentInProgressCourses(int studentID, int pageNumber, int rowCount) throws ConnectionException, ServiceException;
+    Collection<Course> selectAllStudentInProgressCourses(int studentID) throws ConnectionException, ServiceException;
 
-    Collection<Course> selectAllStudentFinishedCourses(int studentID, int pageNumber, int rowCount) throws ConnectionException, ServiceException;
+    Collection<Course> selectAllStudentFinishedCourses(int studentID) throws ConnectionException, ServiceException;
 
-    Collection<Course> selectAllStudentNotStartedCourses(int studentID, int pageNumber, int rowCount) throws ConnectionException, ServiceException;
+    Collection<Course> selectAllStudentNotStartedCourses(int studentID) throws ConnectionException, ServiceException;
 
-    Collection<Course> selectAllStudentAvailableCoursesRegistered(int studentID, int pageNumber, int rowCount, String courseName) throws ConnectionException, ServiceException;
+    Collection<Course> selectAllAvailableCourses(int studentID, String courseName) throws ConnectionException, ServiceException;
 
     Collection<Course> getAllEntities(int pageNumber, int rowCount) throws ConnectionException, ServiceException;
 
@@ -27,10 +27,6 @@ public interface CourseService extends DefaultService<Course> {
     Collection<String> selectAllCoursesNameByStudentID(int studentID) throws ConnectionException, ServiceException;
 
     Collection<String> selectAllCoursesName() throws ConnectionException, ServiceException;
-
-    int selectAvailableCoursesCountRegistered(int studentID, String courseName) throws ConnectionException, ServiceException;
-
-    int selectAvailableCoursesCount(String courseName) throws ConnectionException, ServiceException;
 
     int selectFinishedCoursesCount(int studentID) throws ConnectionException, ServiceException;
 

@@ -1,8 +1,6 @@
 package com.MyServlet.DBManager.Service.Impl;
 
 import com.MyServlet.DBManager.DBConnection;
-import com.MyServlet.DBManager.Dao.AdministratorDao;
-import com.MyServlet.DBManager.Dao.Impl.AdministratorDaoImpl;
 import com.MyServlet.DBManager.Dao.Impl.StudentDaoImpl;
 import com.MyServlet.DBManager.Dao.Impl.TeacherDaoImpl;
 import com.MyServlet.DBManager.Dao.Impl.UserDaoImpl;
@@ -10,7 +8,6 @@ import com.MyServlet.DBManager.Dao.StudentDao;
 import com.MyServlet.DBManager.Dao.TeacherDao;
 import com.MyServlet.DBManager.Dao.UserDao;
 import com.MyServlet.DBManager.Service.TeacherService;
-import com.MyServlet.Entity.Administrator;
 import com.MyServlet.Entity.Student;
 import com.MyServlet.Entity.Teacher;
 import com.MyServlet.Exception.ConnectionException;

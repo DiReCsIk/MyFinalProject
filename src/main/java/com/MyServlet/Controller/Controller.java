@@ -2,10 +2,8 @@ package com.MyServlet.Controller;
 
 import com.MyServlet.Command.Command;
 import com.MyServlet.Command.CommandContainer;
-import com.MyServlet.Command.UpdateUserInfoCommand;
 import com.MyServlet.Exception.CommandException;
 import com.MyServlet.Exception.ConnectionException;
-import com.MyServlet.Util.Pages;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;

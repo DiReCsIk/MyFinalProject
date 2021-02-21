@@ -1,6 +1,5 @@
 package com.MyServlet.DBManager.Dao;
 
-import com.MyServlet.DBManager.Service.Impl.AdministratorServiceImpl;
 import com.MyServlet.Entity.Entity;
 import com.MyServlet.Exception.DAOException;
 import org.apache.log4j.Logger;
