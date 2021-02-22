@@ -20,17 +20,30 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Represents GetTeacherFinishedCoursesCommand. Implements command.
+ */
 public class GetTeacherFinishedCoursesCommand implements Command {
     private static final Logger log = Logger.getLogger(GetTeacherFinishedCoursesCommand.class.getName());
 
+    /**
+     * This command retrieves all information about courses, where
+     * teacher id like {@code teacherID}.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In GetTeacherFinishedCoursesCommand");
         HttpSession session = request.getSession();
         log.info("Validating user");
         User student = (User) request.getSession().getAttribute("user");
-        if (student == null || !student.getUserRole().equals(UserRole.STUDENT)) {
-            log.info("Fail. User is not a student ");
+        if (!User.validateUser(student, UserRole.STUDENT)) {
+            log.info("Fail. User is not valid");
             return Pages.MAIN_PAGE;
         }
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));
@@ -41,26 +54,25 @@ public class GetTeacherFinishedCoursesCommand implements Command {
         TeacherService teacherService = new TeacherServiceImpl();
         try {
             log.info("Getting teacher finished courses");
-            ArrayList<Course> courseList = (ArrayList<Course>) courseService.selectAllFinishedTeacherCourses(student.getId(), teacherID, pageNumber, rowCount);
-            int courseCount = courseService.selectAllFinishedTeacherCoursesCount(student.getId(), teacherID);
+            ArrayList<Course> courseList = (ArrayList<Course>) courseService.selectAllFinishedTeacherCourses(student.getId(), teacherID);
             courseList = (ArrayList<Course>) Sorter.sortCourseList(courseList, sortBy);
             ArrayList<Integer> coursesID = new ArrayList<>();
             ArrayList<Integer> teachersID = new ArrayList<>();
-            for (Course course : courseList) {
+            ArrayList<Course> courseArrayList = new ArrayList<>(courseList.subList(rowCount * (pageNumber - 1), Math.min(courseList.size(), rowCount * (pageNumber - 1) + rowCount)));
+            for (Course course : courseArrayList) {
                 coursesID.add(course.getId());
                 teachersID.add(course.getTeacherID());
             }
             LinkedHashMap<String, ArrayList<String>> teachers = (LinkedHashMap<String, ArrayList<String>>) teacherService.selectFinishedTeachersData(student.getId());
-            session.setAttribute("rowCount", rowCount);
             request.setAttribute("teachersID", teachers.get("id"));
             request.setAttribute("teacherNameAndSurname", request.getParameter("teacherNameAndSurname"));
             request.setAttribute("teachers", teachers.get("data"));
             request.setAttribute("marks", courseService.selectAllStudentMarks(coursesID, student.getId()));
             request.setAttribute("teacherData", teacherService.selectTeacherNameAndSurnameByID(teachersID));
-            request.setAttribute("maxPage", (int) Math.ceil((double) courseCount / rowCount));
+            request.setAttribute("maxPage", (int) Math.ceil((double) courseList.size() / rowCount));
             request.setAttribute("pageNumber", pageNumber);
             request.setAttribute("courseType", "finished");
-            request.setAttribute("courseList", courseList);
+            request.setAttribute("courseList", courseArrayList);
             request.setAttribute("sortBy", sortBy);
             log.info("GetTeacherFinishedCoursesCommand successful");
         } catch (ServiceException serviceException) {

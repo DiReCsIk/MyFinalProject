@@ -48,7 +48,7 @@ public class Administrator extends User implements Serializable {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Administrator)) {
+        if (other == null || !(other instanceof Administrator)) {
             return false;
         }
         if (this == other) {
@@ -57,13 +57,28 @@ public class Administrator extends User implements Serializable {
         Administrator otherAdministrator = (Administrator) other;
         return this.name.equals(otherAdministrator.name) && this.surName.equals(otherAdministrator.surName)
                 && this.birthDate.equals(otherAdministrator.birthDate) && this.userID == otherAdministrator.userID
-                && this.getId() == otherAdministrator.getId() && this.getEmail().equals(otherAdministrator.getEmail())
-                && this.getPassword().equals(otherAdministrator.getPassword());
+                && this.getId() == otherAdministrator.getId();
     }
 
     @Override
     public String toString() {
-        return "Administrator{ name='" + name + "', surName='" + surName + "', birthDate=" + birthDate +
-                ", userID=" + userID + ", email='" + getEmail() + ", id=" + getId() + '}';
+        return "Name: " + name +
+                " SurName: " + surName +
+                " BirthDate: " + birthDate +
+                " UserID=" + userID +
+                " Email:" + getEmail() +
+                " ID:" + getId();
+    }
+
+    public Administrator(){
+
+    }
+
+    public Administrator(int id, String name, String surName, Date birthDate, int userID){
+        setId(id);
+        this.name = name;
+        this.surName = surName;
+        this.birthDate = birthDate;
+        this.userID = userID;
     }
 }

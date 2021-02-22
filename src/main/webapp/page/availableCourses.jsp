@@ -57,6 +57,10 @@
                                              marks="${marks}"/>
                     </c:otherwise>
                 </c:choose>
+                <c:if test="${not empty exception}">
+                    <p class="exception" id="exception"><c:out value="${exception}"/></p>
+                    <c:remove var="exception" scope="session"/>
+                </c:if>
                 <footer class="pagination">
                     <c:if test="${pageNumber != 1}">
                         <a href="Controller?command=getAvailableCourses&pageNumber=${pageNumber - 1}&courseType=available&sortBy=${sortBy}">Previous</a>

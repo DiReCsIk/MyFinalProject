@@ -20,10 +20,21 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-
+/**
+ * Represents GetCoursesCommand. Implements command.
+ */
 public class GetCoursesCommand implements Command {
     private static final Logger log = Logger.getLogger(GetCoursesCommand.class.getName());
 
+    /**
+     * This command retrieves all information about in progress, finished, not started courses for student.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In GetCoursesCommand");
@@ -32,8 +43,8 @@ public class GetCoursesCommand implements Command {
         TeacherService teacherService = new TeacherServiceImpl();
         CourseService courseService = new CourseServiceImpl();
         User student = (User) session.getAttribute("user");
-        if (student == null || !student.getUserRole().equals(UserRole.STUDENT)) {
-            log.info("Fail. User is not a student");
+        if (!User.validateUser(student, UserRole.STUDENT)) {
+            log.info("Fail. User isn't valid");
             return Pages.MAIN_PAGE;
         }
         String sortBy;
@@ -57,6 +68,9 @@ public class GetCoursesCommand implements Command {
                 case "finished":
                     log.info("Course type is 'finished'");
                     courseList = (ArrayList<Course>) courseService.selectAllStudentFinishedCourses(student.getId());
+                    LinkedHashMap<String, ArrayList<String>> teachers = (LinkedHashMap<String, ArrayList<String>>) teacherService.selectFinishedTeachersData(student.getId());
+                    request.setAttribute("teachers", teachers.get("data"));
+                    request.setAttribute("teachersID", teachers.get("id"));
                     break;
                 default:
                     log.info("Course type is 'in progress'");
@@ -75,9 +89,6 @@ public class GetCoursesCommand implements Command {
             }
             if (courseType.equals("finished")) {
                 log.info("Adding students mark");
-                LinkedHashMap<String, ArrayList<String>> teachers = (LinkedHashMap<String, ArrayList<String>>) teacherService.selectFinishedTeachersData(student.getId());
-                request.setAttribute("teachers", teachers.get("data"));
-                request.setAttribute("teachersID", teachers.get("id"));
                 request.setAttribute("marks", courseService.selectAllStudentMarks(coursesID, student.getId()));
             }
             session.setAttribute("rowCount", rowCount);

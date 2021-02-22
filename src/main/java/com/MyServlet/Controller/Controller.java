@@ -13,10 +13,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * This is the controller servlet.
+ * It processes all commands that fall into it.
+ * In CommandException case - redirect to 404 error page.
+ * In ConnectionException ase - redirect to 505 error page.
+ *
+ */
 @WebServlet("/Controller")
 public class Controller extends HttpServlet {
     private static final Logger log = Logger.getLogger(Controller.class);
-
+    /**
+     * This is doGet method. Execute all HTTP GET requests.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws ServletException - if trouble with servlet
+     * @throws IOException - if trouble with IO operation
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("In Controller doGet method");
@@ -37,6 +52,14 @@ public class Controller extends HttpServlet {
         }
     }
 
+    /**
+     * This is doPost method. Execute all HTTP POST requests.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws IOException - if trouble with IO operation
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.info("In Controller doPost method");

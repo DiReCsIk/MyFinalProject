@@ -19,17 +19,30 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Represents GetAdministratorsInfoCommand. Implements command.
+ */
 public class GetAdministratorsInfoCommand implements Command {
     private static final Logger log = Logger.getLogger(GetAdministratorsInfoCommand.class.getName());
 
+    /**
+     * This command retrieves all information about administrators,
+     * from database.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In GetAdministratorsInfoCommand");
         HttpSession session = request.getSession();
         User administrator = (User) request.getSession().getAttribute("user");
         log.info("Validating user");
-        if (administrator == null || !administrator.getUserRole().equals(UserRole.ADMINISTRATOR)) {
-            log.info("Fail. User is not an administrator");
+        if (!User.validateUser(administrator, UserRole.ADMINISTRATOR)) {
+            log.info("Fail. User isn't valid");
             return Pages.MAIN_PAGE;
         }
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));

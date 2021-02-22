@@ -63,4 +63,7 @@ public class User extends Entity implements Serializable {
         return "User{ email='" + getEmail() + ", id=" + getId() + '}';
     }
 
+    public static boolean validateUser(User user, UserRole userRole){
+        return user != null && user.getUserRole().equals(userRole);
+    }
 }

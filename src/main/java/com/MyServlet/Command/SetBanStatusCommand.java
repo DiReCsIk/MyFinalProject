@@ -13,16 +13,27 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Represents SetBanStatusCommand. Implements command.
+ */
 public class SetBanStatusCommand implements Command {
     private static final Logger log = Logger.getLogger(SetBanStatusCommand.class.getName());
 
+    /**
+     * This command set ban status to user.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In SetBanStatusCommand");
-        log.info("Validating user");
         User administrator = (User) request.getSession().getAttribute("user");
-        if (administrator == null || !administrator.getUserRole().equals(UserRole.ADMINISTRATOR)) {
-            log.info("Fail. User is not an administrator ");
+        if (!User.validateUser(administrator, UserRole.ADMINISTRATOR)) {
+            log.info("Fail. User is not valid");
             return Pages.MAIN_PAGE;
         }
         int userID = Integer.parseInt(request.getParameter("userID"));

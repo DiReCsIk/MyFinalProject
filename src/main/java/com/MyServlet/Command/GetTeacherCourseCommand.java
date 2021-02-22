@@ -18,9 +18,22 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Represents GetTeacherCourseCommand. Implements command.
+ */
 public class GetTeacherCourseCommand implements Command {
     private static final Logger log = Logger.getLogger(GetTeacherCourseCommand.class.getName());
 
+    /**
+     * This command retrieves all information about teacher course, students on his course
+     * and send teacher to his course.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In GetTeacherCourseCommand");
@@ -28,8 +41,9 @@ public class GetTeacherCourseCommand implements Command {
         TeacherService teacherService = new TeacherServiceImpl();
         log.info("Validating user");
         User teacher = (User) session.getAttribute("user");
-        if (teacher == null || !teacher.getUserRole().equals(UserRole.TEACHER)) {
-            log.info("Fail. User is not a teacher");
+        User administrator = (User) session.getAttribute("user");
+        if (!User.validateUser(teacher, UserRole.TEACHER)) {
+            log.info("Fail. User is not valid");
             return Pages.MAIN_PAGE;
         }
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));

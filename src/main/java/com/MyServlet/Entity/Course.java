@@ -11,6 +11,23 @@ public class Course extends Entity{
     private int term;
     private int studentCount;
 
+
+
+    public Course(int id, String theme, String name, Date startDate, Date endDate, int teacherID, int term, int studentCount) {
+        this.setId(id);
+        this.theme = theme;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.teacherID = teacherID;
+        this.term = term;
+        this.studentCount = studentCount;
+    }
+
+    public Course() {
+
+    }
+
     public int getStudentCount() {
         return studentCount;
     }
@@ -89,7 +106,12 @@ public class Course extends Entity{
 
     @Override
     public String toString() {
-        return "Course{ theme='" + theme + "', name='" + name + "', startDate=" + startDate + ", endDate=" + endDate +
-                ", teacherID=" + teacherID + ", term=" + term + ", studentCount=" + studentCount + '}';
+        return "Theme: " + theme +
+                " Name: " + name +
+                " StartDate: " + startDate +
+                " EndDate: " + endDate +
+                " TeacherID: " + teacherID +
+                " Term: " + term +
+                " StudentCount: " + studentCount;
     }
 }

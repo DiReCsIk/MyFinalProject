@@ -19,16 +19,29 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
+/**
+ * Represents GetAvailableCoursesCommand. Implements command.
+ */
 public class GetAvailableCoursesCommand implements Command {
     private static final Logger log = Logger.getLogger(GetAvailableCoursesCommand.class.getName());
 
+    /**
+     * This command retrieves all information about available courses for students
+     * or for unregistered user.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In GetAvailableCourses");
         HttpSession session = request.getSession();
         User student = (User) request.getSession().getAttribute("user");
         if (student != null && !student.getUserRole().equals(UserRole.STUDENT)) {
-            log.info("Fail. User is not a student");
+            log.info("Fail. User isn't valid");
             return Pages.MAIN_PAGE;
         }
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));

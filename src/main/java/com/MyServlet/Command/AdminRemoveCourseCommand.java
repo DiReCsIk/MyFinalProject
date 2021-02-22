@@ -14,17 +14,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Represents AdminRemoveCourseCommand. Implements command.
+ */
 public class AdminRemoveCourseCommand implements Command {
     private static final Logger log = Logger.getLogger(AdminRemoveCourseCommand.class.getName());
 
+    /**
+     * This command remove course from database.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In AdminRemoveCourseCommand");
         HttpSession session = request.getSession();
         log.info("Validating user");
         User administrator = (User) session.getAttribute("user");
-        if (administrator == null || !administrator.getUserRole().equals(UserRole.ADMINISTRATOR)) {
-            log.info("Fail. User is not an administrator");
+        if (!User.validateUser(administrator, UserRole.ADMINISTRATOR)) {
+            log.info("Fail. User is not valid");
             return Pages.MAIN_PAGE;
         }
         int courseID = Integer.parseInt(request.getParameter("courseID"));

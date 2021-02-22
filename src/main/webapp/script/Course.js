@@ -33,13 +33,13 @@ window.onload = function () {
     }
     switch (params.get('courseType')) {
         case 'finished':
-            document.querySelector('.container').style.height = '100%';
-            document.querySelector('body').style.height = '136%';
+            document.querySelector('.container').style.height = '93%';
+            document.querySelector('body').style.height = '127%';
             break;
         case 'notStarted':
         case 'inProgress':
-            document.querySelector('.container').style.height = '80%';
-            document.querySelector('body').style.height = '116%';
+            document.querySelector('.container').style.height = '76%';
+            document.querySelector('body').style.height = '111%';
     }
 }
 
@@ -59,7 +59,7 @@ function courseRegister(elem) {
 
 function changeTeacher() {
     let select = document.getElementById("select");
-    if (select.value === "All teachers") {
+    if (select.value === "All teachers" || select.value === "Все преподаватели") {
         document.getElementById("sortBy").value = params.get('sortBy');
         document.getElementById("courseForm").submit();
     } else {

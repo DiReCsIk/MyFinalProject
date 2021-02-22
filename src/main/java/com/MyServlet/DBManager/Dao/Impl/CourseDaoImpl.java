@@ -1,6 +1,4 @@
 package com.MyServlet.DBManager.Dao.Impl;
-//TODO валидация на server
-//TODO в юзера добавить роль
 
 import com.MyServlet.DBManager.Dao.AbstractDao;
 import com.MyServlet.DBManager.Dao.CourseDao;
@@ -65,7 +63,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     private static final String SELECT_ALL_COURSES_LIMIT = "SELECT * FROM COURSE LIMIT ? OFFSET ?;";
     private static final String SELECT_ALL_FINISHED_TEACHER_COURSES = "SELECT * FROM COURSE INNER JOIN " +
             "STUDENT_COURSE USING (COURSE_ID) WHERE COURSE_END_DATE < '" + new Date(new java.util.Date().getTime()) +
-            "' AND STUDENT_ID = ? AND TEACHER_ID = ? LIMIT ? OFFSET ?;";
+            "' AND STUDENT_ID = ? AND TEACHER_ID = ?;";
     private static final String SELECT_ALL_FINISHED_TEACHER_COURSES_COUNT = "SELECT COUNT(*) FROM " +
             "(SELECT * FROM COURSE INNER JOIN STUDENT_COURSE USING (COURSE_ID) WHERE COURSE_END_DATE " +
             "< '" + new Date(new java.util.Date().getTime()) + "' AND STUDENT_ID = ? AND TEACHER_ID = ?) AS C;";
@@ -74,6 +72,8 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
             " COURSE_ID NOT IN (SELECT COURSE_ID FROM STUDENT_COURSE WHERE STUDENT_ID = ?);";
     private static final String SELECT_ALL_COURSES_AVAILABLE_NAME = "SELECT DISTINCT COURSE_NAME " +
             "FROM COURSE WHERE COURSE_START_DATE > '" + new Date(new java.util.Date().getTime()) + "';";
+
+
 
     public CourseDaoImpl(Connection connection) {
         super(connection);
@@ -163,7 +163,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
                 String.valueOf(studentID));
     }
 
-    @Override
+    /*@Override
     public int selectAvailableCoursesCount(String courseName) throws DAOException {
         return selectIntByStatement(SELECT_ALL_STUDENT_AVAILABLE_COURSES_COUNT,
                 courseName);
@@ -175,7 +175,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
                 String.valueOf(studentID),
                 courseName);
     }
-
+*/
     @Override
     public int selectFinishedCoursesCount(int studentID) throws DAOException {
         return selectIntByStatement(SELECT_ALL_STUDENT_FINISHED_COURSES_COUNT,
@@ -241,12 +241,10 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     }
 
     @Override
-    public Collection<Course> selectAllFinishedTeacherCourses(int studentID, int teacherID, int pageNumber, int rowCount) throws DAOException {
+    public Collection<Course> selectAllFinishedTeacherCourses(int studentID, int teacherID) throws DAOException {
         return selectAllByStatement(SELECT_ALL_FINISHED_TEACHER_COURSES,
                 String.valueOf(studentID),
-                String.valueOf(teacherID),
-                String.valueOf(rowCount),
-                String.valueOf(rowCount * (pageNumber - 1)));
+                String.valueOf(teacherID));
     }
 
     @Override

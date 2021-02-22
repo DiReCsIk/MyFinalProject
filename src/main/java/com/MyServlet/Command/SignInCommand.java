@@ -24,9 +24,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Represents SignInCommand. Implements command.
+ */
 public class SignInCommand implements Command {
     private static final Logger log = Logger.getLogger(SignInCommand.class.getName());
 
+    /**
+     * This command set sign in user to web application.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In SignInCommand");
@@ -64,11 +76,11 @@ public class SignInCommand implements Command {
                     session.setAttribute("user", administrator);
             }
             if (request.getParameter("rememberBox") != null) {
-                log.info("Adding userRole and userID cookies");
-                Cookie roleCookie = new Cookie("userRole", String.valueOf(user.getUserRole()));
-                Cookie userIDCookie = new Cookie("userID", user.getId() + "");
-                response.addCookie(roleCookie);
-                response.addCookie(userIDCookie);
+                log.info("Adding email and password cookies");
+                Cookie emailCookie = new Cookie("userEmail", user.getEmail());
+                Cookie passwordCookie = new Cookie("userPassword", user.getPassword());
+                response.addCookie(emailCookie);
+                response.addCookie(passwordCookie);
             }
             log.info("SignInCommand successful");
             if (session.getAttribute("toCourse") != null) {

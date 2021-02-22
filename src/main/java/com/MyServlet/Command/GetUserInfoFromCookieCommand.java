@@ -8,62 +8,101 @@ import com.MyServlet.DBManager.Service.Impl.UserServiceImpl;
 import com.MyServlet.DBManager.Service.StudentService;
 import com.MyServlet.DBManager.Service.TeacherService;
 import com.MyServlet.DBManager.Service.UserService;
+import com.MyServlet.Entity.Administrator;
+import com.MyServlet.Entity.Student;
 import com.MyServlet.Entity.Teacher;
+import com.MyServlet.Entity.User;
 import com.MyServlet.Exception.CommandException;
 import com.MyServlet.Exception.ConnectionException;
 import com.MyServlet.Exception.ServiceException;
 import com.MyServlet.Util.Pages;
+import com.MyServlet.Util.UserRole;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 
+/**
+ * Represents GetUserInfoFromCookieCommand. Implements command.
+ */
 public class GetUserInfoFromCookieCommand implements Command {
     private static final Logger log = Logger.getLogger(GetUserInfoFromCookieCommand.class.getName());
 
+    /**
+     * This command retrieves all information about user from cookies.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In GetUserInfoFromCookieCommand");
         Cookie[] cookies = request.getCookies();
-        if (Arrays.stream(cookies).noneMatch(cookie -> cookie.getName().equals("userRole"))
-                || Arrays.stream(cookies).noneMatch(cookie -> cookie.getName().equals("userID"))) {
-            log.info("Cookies are empty");
-            return Pages.SIGN_IN_PAGE;
-        }
         HttpSession session = request.getSession();
-        String role = Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("userRole")).findFirst().get().getValue();
-        session.setAttribute("userRole", role);
-        int userID = Integer.parseInt(Arrays.stream(cookies).filter(cookie -> cookie.getName().equals("userID")).findFirst().get().getValue());
+        String userEmail = "";
+        String userPassword = "";
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("userEmail")) {
+                userEmail = cookie.getValue();
+            }
+            if (cookie.getName().equals("userPassword")) {
+                userPassword = cookie.getValue();
+            }
+        }
         UserService userService = new UserServiceImpl();
         try {
-            session.setAttribute("email", userService.selectEntityByID(userID).getEmail());
-            switch (role) {
-                case "teacher":
-                    TeacherService teacherService = new TeacherServiceImpl();
-                    Teacher teacher = teacherService.selectTeacherByUserID(userID);
-                    session.setAttribute("courseID", teacherService.selectTeacherCourseID(teacher.getId()));
-                    session.setAttribute("studentsID", teacherService.selectTeacherStudentsID(teacher.getId()));
-                    session.setAttribute("user", teacherService.selectTeacherByUserID(userID));
-                    log.info("User is teacher");
-                    break;
-                case "administrator":
-                    AdministratorService administratorService = new AdministratorServiceImpl();
-                    session.setAttribute("user", administratorService.selectAdministratorByUserID(userID));
-                    log.info("User is administrator");
-                    break;
-                default:
-                    StudentService studentService = new StudentServiceImpl();
-                    session.setAttribute("user", studentService.selectStudentByUserID(userID));
-                    log.info("User is student");
+            log.info("verifying user");
+            User user = userService.selectUserByEmail(userEmail);
+            if (user != null && userPassword.equals(user.getPassword())) {
+                log.info("User is valid");
+                switch (user.getUserRole()) {
+                    case TEACHER:
+                        TeacherService teacherService = new TeacherServiceImpl();
+                        Teacher teacher = teacherService.selectTeacherByUserID(user.getId());
+                        teacher.setPassword(userPassword);
+                        teacher.setEmail(userEmail);
+                        teacher.setUserRole(UserRole.TEACHER);
+                        session.setAttribute("user", teacher);
+                        log.info("User is teacher");
+                        break;
+                    case ADMINISTRATOR:
+                        AdministratorService administratorService = new AdministratorServiceImpl();
+                        Administrator administrator = administratorService.selectAdministratorByUserID(user.getId());
+                        administrator.setPassword(userPassword);
+                        administrator.setEmail(userEmail);
+                        administrator.setUserRole(UserRole.ADMINISTRATOR);
+                        session.setAttribute("user", administrator);
+                        log.info("User is administrator");
+                        break;
+                    default:
+                        StudentService studentService = new StudentServiceImpl();
+                        Student student = studentService.selectStudentByUserID(user.getId());
+                        student.setPassword(userPassword);
+                        student.setEmail(userEmail);
+                        student.setUserRole(UserRole.STUDENT);
+                        session.setAttribute("user",student );
+                        log.info("User is student");
+                }
+                log.info("Success in GetUserInfoFromCookieCommand");
+                session.setAttribute("email", user.getEmail());
+                return Pages.MAIN_PAGE;
             }
             log.info("GetUserInfoFromCookieCommand successful");
+            Cookie emailCookie = new Cookie("userEmail", "");
+            Cookie passwordCookie = new Cookie("userPassword", "");
+            emailCookie.setMaxAge(0);
+            passwordCookie.setMaxAge(0);
+            response.addCookie(emailCookie);
+            response.addCookie(passwordCookie);
         } catch (ServiceException serviceException) {
             log.error("Error!", serviceException);
             throw new CommandException(serviceException.getMessage(), serviceException);
         }
-        return Pages.MAIN_PAGE;
+        return Pages.SIGN_IN_PAGE;
     }
 }

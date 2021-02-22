@@ -1,6 +1,7 @@
 package com.MyServlet.Command;
 
 import com.MyServlet.DBManager.Service.Impl.CourseServiceImpl;
+import com.MyServlet.Entity.Course;
 import com.MyServlet.Entity.Student;
 import com.MyServlet.Exception.CommandException;
 import com.MyServlet.Exception.ConnectionException;
@@ -12,10 +13,22 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
+/**
+ * Represents EnrollStudentOnCourseCommand. Implements command.
+ */
 public class EnrollStudentOnCourseCommand implements Command {
     private static final Logger log = Logger.getLogger(EnrollStudentOnCourseCommand.class.getName());
 
+    /**
+     * This command enroll student on course.
+     *
+     * @param request  - HttpServletRequest
+     * @param response - HttpServletResponse
+     * @throws CommandException    - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In EnrollStudentOnCourseCommand");
@@ -32,7 +45,18 @@ public class EnrollStudentOnCourseCommand implements Command {
         int courseID = Integer.parseInt(request.getParameter("courseID"));
         CourseServiceImpl courseService = new CourseServiceImpl();
         try {
-            courseService.insertStudentToCourse(student.getId(), courseID);
+            if (courseService.selectEntityByID(courseID) != null) {
+                ArrayList<Course> arrayList = (ArrayList<Course>) courseService.selectAllStudentNotStartedCourses(student.getId());
+                for (Course course : arrayList) {
+                    if(course.getId() == courseID){
+                        session.setAttribute("exception", "You have already registered on this course!");
+                        return Pages.GET_AVAILABLE_COURSE;
+                    }
+                }
+                courseService.insertStudentToCourse(student.getId(), courseID);
+            } else {
+                session.setAttribute("exception", "This course has been deleted");
+            }
             log.info("EnrollStudentOnCourseCommand successful");
         } catch (ServiceException serviceException) {
             log.error("Error!", serviceException);

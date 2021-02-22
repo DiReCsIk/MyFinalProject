@@ -17,16 +17,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 
+/**
+ * Represents CreateCourseCommand. Implements command.
+ */
 public class CreateCourseCommand implements Command {
     private static final Logger log = Logger.getLogger(CreateCourseCommand.class.getName());
 
+    /**
+     * This command create course in database.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In CreateCourseCommand");
         User administrator = (User) request.getSession().getAttribute("user");
         log.info("Validating user");
-        if (administrator == null || !administrator.getUserRole().equals(UserRole.ADMINISTRATOR)) {
-            log.info("Fail. User is not an administrator");
+        if (!User.validateUser(administrator, UserRole.ADMINISTRATOR)) {
+            log.info("Fail. User is not valid");
             return Pages.MAIN_PAGE;
         }
         String name = request.getParameter("name");

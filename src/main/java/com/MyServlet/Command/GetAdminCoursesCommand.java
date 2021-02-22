@@ -18,17 +18,30 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
+/**
+ * Represents GetAdminCoursesCommand. Implements command.
+ */
 public class GetAdminCoursesCommand implements Command {
     private static final Logger log = Logger.getLogger(GetAdminCoursesCommand.class.getName());
 
+    /**
+     * This command retrieves information a list of all courses,
+     * teachers in these courses, additional information on courses from the database.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In GetAdminCoursesCommand");
         HttpSession session = request.getSession();
         log.info("Validating user");
         User administrator = (User) request.getSession().getAttribute("user");
-        if (administrator == null || !administrator.getUserRole().equals(UserRole.ADMINISTRATOR)) {
-            log.info("Fail. User is not an administrator ");
+        if (!User.validateUser(administrator, UserRole.ADMINISTRATOR)) {
+            log.info("Fail. User is not valid");
             return Pages.MAIN_PAGE;
         }
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));

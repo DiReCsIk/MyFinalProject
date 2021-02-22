@@ -18,17 +18,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Represents SetStudentMarkCommand. Implements command.
+ */
 public class SetStudentMarkCommand implements Command {
     private static final Logger log = Logger.getLogger(SetStudentMarkCommand.class.getName());
 
+    /**
+     * This command set mark to student.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In SetStudentMarkCommand");
         log.info("Validating user");
         HttpSession session = request.getSession();
         User teacher = (User) session.getAttribute("user");
-        if (teacher == null || !teacher.getUserRole().equals(UserRole.TEACHER)) {
-            log.info("Fail. User is not a teacher");
+        if (!User.validateUser(teacher, UserRole.TEACHER)) {
+            log.info("Fail. User is not valid");
             return Pages.MAIN_PAGE;
         }
         int studentID = Integer.parseInt(request.getParameter("studentID"));

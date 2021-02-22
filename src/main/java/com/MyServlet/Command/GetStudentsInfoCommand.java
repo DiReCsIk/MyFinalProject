@@ -19,17 +19,29 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Represents GetStudentsInfoCommand. Implements command.
+ */
 public class GetStudentsInfoCommand implements Command {
     private static final Logger log = Logger.getLogger(GetStudentsInfoCommand.class.getName());
 
+    /**
+     * This command retrieves all information about students.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In GetStudentsInfoCommand");
         HttpSession session = request.getSession();
         log.info("Validating user");
         User administrator = (User) session.getAttribute("user");
-        if (administrator == null || !administrator.getUserRole().equals(UserRole.ADMINISTRATOR)) {
-            log.info("Fail. User is not an administrator");
+        if (!User.validateUser(administrator, UserRole.ADMINISTRATOR)) {
+            log.info("Fail. User is not valid");
             return Pages.MAIN_PAGE;
         }
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));

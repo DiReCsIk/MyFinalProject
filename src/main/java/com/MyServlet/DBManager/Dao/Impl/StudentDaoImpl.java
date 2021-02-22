@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 
-//TODO TRY TO BREAK WITH LARGE NAME
 public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
     private static final String SELECT_STUDENT_BY_ID = "SELECT * FROM STUDENT WHERE STUDENT_ID = ?;";
     private static final String SELECT_ALL_STUDENTS_COUNT = "SELECT COUNT(*) FROM STUDENT;";
@@ -34,6 +33,7 @@ public class StudentDaoImpl extends AbstractDao<Student> implements StudentDao {
     public Collection<Student> getAllEntities() throws DAOException {
         return selectAllByStatement(SELECT_ALL_STUDENTS);
     }
+
 
     @Override
     public Student selectEntityByID(int studentID) throws DAOException {

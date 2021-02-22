@@ -19,16 +19,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * Represents AdminUpdateCourseCommand. Implements command.
+ */
 public class AdminUpdateCourseCommand implements Command {
     private static final Logger log = Logger.getLogger(AdminUpdateCourseCommand.class.getName());
 
+    /**
+     * This command update course in database.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In AdminUpdateCourseCommand");
         log.info("Validating user");
         User administrator = (User) request.getSession().getAttribute("user");
-        if (administrator == null || !administrator.getUserRole().equals(UserRole.ADMINISTRATOR)) {
-            log.info("Fail. User is not an administrator");
+        if (!User.validateUser(administrator, UserRole.ADMINISTRATOR)) {
+            log.info("Fail. User is not valid");
             return Pages.MAIN_PAGE;
         }
         int courseID = Integer.parseInt(request.getParameter("courseID"));

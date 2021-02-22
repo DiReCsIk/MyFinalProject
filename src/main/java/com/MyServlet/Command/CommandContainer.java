@@ -1,9 +1,11 @@
 package com.MyServlet.Command;
-//TODO toLong all and toString
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents CommandContainer.
+ */
 public class CommandContainer {
     private static final Map<String, Command> commands;
 
@@ -33,7 +35,12 @@ public class CommandContainer {
         commands.put("getAvailableCourses", new GetAvailableCoursesCommand());
         commands.put("setStudentMarkCommand", new SetStudentMarkCommand());
     }
-
+    /**
+     * Return command from command list
+     *
+     * @param commandName - command name in list
+     *
+     */
     public static Command getCommand(String commandName) {
         return commands.get(commandName);
     }

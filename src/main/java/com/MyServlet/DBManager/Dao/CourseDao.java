@@ -16,7 +16,7 @@ public interface CourseDao extends DefaultDao<Course> {
 
     Collection<Course> selectAllStudentNotStartedCourses(int studentID) throws DAOException;
 
-    Collection<Course> selectAllFinishedTeacherCourses(int studentID, int teacherID, int pageNumber, int rowCount) throws DAOException;
+    Collection<Course> selectAllFinishedTeacherCourses(int studentID, int teacherID) throws DAOException;
 
     Collection<Course> getAllEntities(int pageNumber, int rowCount) throws DAOException;
 
@@ -25,10 +25,6 @@ public interface CourseDao extends DefaultDao<Course> {
     Collection<String>  selectAllCoursesName() throws DAOException;
 
     Integer selectStudentMarkOnCourse(int studentID, int courseID) throws DAOException;
-
-    int selectAvailableCoursesCount(String courseName) throws DAOException;
-
-    int selectAvailableCoursesCountRegistered(int studentID, String courseName) throws DAOException;
 
     int selectFinishedCoursesCount(int studentID) throws DAOException;
 

@@ -1,5 +1,5 @@
 body {
-    height: 116%;
+    height: 111%;
     font-size: 18px;
     font-family: 'IBM Plex Sans', sans-serif;
 }
@@ -11,7 +11,7 @@ body {
     font-size: 86px;
     font-weight: normal;
     line-height: 48px;
-    margin-top: 4%;
+    margin-top: 2%;
     margin-left: 34%;
     text-shadow: 1px 1px 2px white;
 }
@@ -34,7 +34,7 @@ table {
     background-color: #eeeeee;
     padding: 1.2rem 1rem 2%;
     width: 84%;
-    height: 80%;
+    height: 76%;
     box-shadow: 0 10px 40px -10px white;
     border-radius: 32px;
 }
@@ -122,13 +122,14 @@ td {
     text-align: center;
 }
 select {
-    margin-bottom: 2%;
-    color: #393e46;
+    margin-bottom: 3%;
+    margin-top: -2%;
     font-size: 16px;
     font-weight: 700;
     line-height: 1.3;
     padding: .6em 1.4em .5em .8em;
     width: 40%;
+    color: #393e46;
     outline: 0;
     border: 1px solid #aaa;
     box-shadow: 0 1px 0 1px rgba(0,0,0,.04);

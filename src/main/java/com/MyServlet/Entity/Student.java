@@ -1,5 +1,7 @@
 package com.MyServlet.Entity;
 
+import com.MyServlet.Util.UserRole;
+
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -9,6 +11,27 @@ public class Student extends User implements Serializable {
     private boolean banStatus;
     private Date birthDate;
     private int userID;
+
+    public Student(String email, String password, UserRole userRole, String name, String surName, boolean banStatus, Date birthDate, int userID) {
+        super(email, password, userRole);
+        this.name = name;
+        this.surName = surName;
+        this.banStatus = banStatus;
+        this.birthDate = birthDate;
+        this.userID = userID;
+    }
+
+    public Student(String name, String surName, boolean banStatus, Date birthDate, int userID) {
+        this.name = name;
+        this.surName = surName;
+        this.banStatus = banStatus;
+        this.birthDate = birthDate;
+        this.userID = userID;
+    }
+
+    public Student() {
+
+    }
 
     public void setUserID(int userID) {
         this.userID = userID;
@@ -65,9 +88,7 @@ public class Student extends User implements Serializable {
         }
         Student otherStudent = (Student) other;
         return this.name.equals(otherStudent.name) && this.surName.equals(otherStudent.surName)
-                && this.birthDate.equals(otherStudent.birthDate) && this.userID == otherStudent.userID
-                && this.getId() == otherStudent.getId() && this.getEmail().equals(otherStudent.getEmail())
-                && this.getPassword().equals(otherStudent.getPassword());
+                && this.birthDate.equals(otherStudent.birthDate) && this.userID == otherStudent.userID;
     }
 
     @Override

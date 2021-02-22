@@ -1,5 +1,4 @@
 package com.MyServlet.Command;
-//TODO пересмотреь переменніе в сесиях
 
 import com.MyServlet.DBManager.Service.AdministratorService;
 import com.MyServlet.DBManager.Service.Impl.AdministratorServiceImpl;
@@ -19,14 +18,27 @@ import com.MyServlet.Exception.ServiceException;
 import com.MyServlet.Util.Pages;
 import org.apache.log4j.Logger;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
 
+/**
+ * Represents UpdateUserInfoCommand. Implements command.
+ */
 public class UpdateUserInfoCommand implements Command {
     private static final Logger log = Logger.getLogger(UpdateUserInfoCommand.class.getName());
 
+    /**
+     * This command update user info.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In UpdateUserInfoCommand");
@@ -57,6 +69,14 @@ public class UpdateUserInfoCommand implements Command {
                 if (!newPassword.equals("")) {
                     log.info("Setting new password");
                     user.setPassword(newPassword);
+                    Cookie[] cookies = request.getCookies();
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("userPassword")) {
+                            cookie.setValue(newPassword);
+                            response.addCookie(cookie);
+                            break;
+                        }
+                    }
                     userService.updateEntity(user);
                 }
                 log.info("Updating user data");

@@ -1,5 +1,4 @@
 package com.MyServlet.Command;
-//TODO регистрация и куки
 
 import com.MyServlet.DBManager.Service.Impl.StudentServiceImpl;
 import com.MyServlet.DBManager.Service.Impl.UserServiceImpl;
@@ -18,9 +17,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
 
+/**
+ * Represents SignUpCommand. Implements command.
+ */
 public class SignUpCommand implements Command {
     private static final Logger log = Logger.getLogger(SignUpCommand.class.getName());
 
+    /**
+     * This command set sign up user in database.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     *
+     * @throws CommandException - if trouble in service
+     * @throws ConnectionException - if trouble with db connection
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, ConnectionException {
         log.info("In SignUpCommand");
