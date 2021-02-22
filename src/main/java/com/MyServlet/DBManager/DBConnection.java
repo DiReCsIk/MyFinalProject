@@ -20,7 +20,7 @@ public class DBConnection implements Closeable {
 
     static {
         log.info("Start initializing DBConnection");
-        ResourceBundle dbConfig = ResourceBundle.getBundle("dbConfig");
+        ResourceBundle dbConfig = ResourceBundle.getBundle("/sql/dbConfig");
         int maxActive = Integer.parseInt(dbConfig.getString("maxActive"));
         int minIdle = Integer.parseInt(dbConfig.getString("minIdle"));
         int maxIdle = Integer.parseInt(dbConfig.getString("maxIdle"));

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
     <head>
-        <title>Sign up</title>
+        <title>DireElective - Sign up</title>
         <link rel="stylesheet" href="../style/SignUp.css" type="text/css">
         <link rel="shortcut icon" href="../image/icon.png" type="image/png">
     </head>

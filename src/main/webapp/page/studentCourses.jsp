@@ -4,6 +4,7 @@
     <head>
         <title>DireElective - My courses</title>
         <link rel="stylesheet" href="../style/StudentCourses.css">
+        <link rel="shortcut icon" href="../image/icon.png" type="image/png">
         <script src="../script/StudentCourses.js"></script>
     </head>
     <body>

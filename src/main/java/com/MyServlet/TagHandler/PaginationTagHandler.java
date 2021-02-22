@@ -18,7 +18,6 @@ public class PaginationTagHandler extends SimpleTagSupport {
         JspWriter jspWriter = getJspContext().getOut();
         try {
             if (pageNumber != 1) {
-                System.out.println("<a href=\"Controller?command=" + command + "&pageNumber=" + (pageNumber - 1) + "\">Previous </a>");
                 jspWriter.print("<a href=\"Controller?command=" + command + "&pageNumber=" + (pageNumber - 1) + "\">Previous </a>");
                 log.info("pageNumber != 1. Printing previous");
             }

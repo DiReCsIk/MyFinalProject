@@ -3,7 +3,7 @@
 
 <html>
     <head>
-        <title>DireElective - Courses</title>
+        <title>DireElective - Available courses</title>
         <link rel="shortcut icon" href="../image/icon.png" type="image/png">
         <link rel="stylesheet" href="../style/AvailableCourses.css" type="text/css">
     </head>

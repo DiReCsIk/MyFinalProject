@@ -11,13 +11,11 @@ function tdOnClick(elem) {
 }
 
 function tdOnBlur(elem) {
-    alert(lastText);
-    if (elem.innerHTML > 100 || elem.innerHTML < 0 || elem.innerHTML === '') {
+     if (elem.innerHTML > 100 || elem.innerHTML < 0 || elem.innerHTML === '') {
         elem.innerHTML = lastText;
     }
 
     if (lastText !== elem.innerHTML) {
-
         document.getElementById("studentID").value = elem.id;
         document.getElementById("mark").value = elem.innerHTML;
         document.getElementById("studentSetMark").submit();

@@ -33,8 +33,8 @@ window.onload = function () {
     }
     switch (params.get('courseType')) {
         case 'finished':
-            document.querySelector('.container').style.height = '93%';
-            document.querySelector('body').style.height = '127%';
+            document.querySelector('.container').style.height = '95%';
+            document.querySelector('body').style.height = '129%';
             break;
         case 'notStarted':
         case 'inProgress':

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
     <head>
-        <title>DireElective - create course</title>
+        <title>DireElective - Update course</title>
         <link rel="shortcut icon" href="../image/icon.png" type="image/png">
         <link rel="stylesheet" href="../style/UpdateCourse.css" type="text/css">
         <script src="../script/Course.js"></script>
