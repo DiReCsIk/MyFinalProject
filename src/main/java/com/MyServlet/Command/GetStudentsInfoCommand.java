@@ -45,6 +45,9 @@ public class GetStudentsInfoCommand implements Command {
             return Pages.MAIN_PAGE;
         }
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));
+        if(pageNumber <= 0){
+            pageNumber = 1;
+        }
         int rowCount = session.getAttribute("rowCount") == null ? 5 : (int) session.getAttribute("rowCount");
         StudentService studentService = new StudentServiceImpl();
         UserService userService = new UserServiceImpl();

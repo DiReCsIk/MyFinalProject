@@ -5,55 +5,43 @@
 <fmt:setLocale value="${lang}"/>
 <fmt:setBundle basename="localization/localization"/>
 <html>
-<head>
-    <title></title>
-    <link rel="stylesheet" href="../style/Menu.css">
-</head>
-<body>
-<nav id="navigation" class="navigation">
-    <header class="logo">
-        <img src="../image/logo.png" alt="logo"/>
-        <p>DireElective</p>
-    </header>
-    <a href="javascript:void(0)" class="closeButton" onclick="closeNav()">&times;</a>
-    <ul class="list">
-        <c:choose>
-            <c:when test="${sessionScope.user.userRole == null}">
-                <%@include file="../pageFragment/unauthorizedMenu.jspf" %>
-            </c:when>
-            <c:otherwise>
-                <%@include file="../pageFragment/authorizedMenu.jspf" %>
-            </c:otherwise>
-        </c:choose>
-        <li>
-            <a href="../page/main.jsp" style="margin-top: 4rem"><fmt:message key="menu.mainPage"/><%--Главная страница--%></a>
-            <hr>
-        </li>
-        <c:if test="${sessionScope.user == null || sessionScope.user.userRole eq UserRole.STUDENT}">
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="../style/Menu.css">
+    </head>
+    <body>
+    <nav id="navigation" class="navigation">
+        <header class="logo">
+            <img src="../image/logo.png" alt="logo"/>
+            <p>DireElective</p>
+        </header>
+        <a href="javascript:void(0)" class="closeButton" onclick="closeNav()">&times;</a>
+        <ul class="list">
+            <c:choose>
+                <c:when test="${sessionScope.user.userRole == null}">
+                    <%@include file="../pageFragment/unauthorizedMenu.jspf" %>
+                </c:when>
+                <c:otherwise>
+                    <%@include file="../pageFragment/authorizedMenu.jspf" %>
+                </c:otherwise>
+            </c:choose>
             <li>
-                <a href="${pageContext.request.contextPath}/Controller?command=getAvailableCourses"><fmt:message key="menu.coursePage"/></a>
+                <a href="../page/main.jsp" style="margin-top: 4rem"><fmt:message key="menu.mainPage"/><%--Главная страница--%></a>
                 <hr>
             </li>
-        </c:if>
-        <li>
-            <a href="#"><fmt:message key="menu.aboutUsPage"/><%--О нас--%></a>
-            <hr>
-        </li>
-    </ul>
-  <%--  <div class="navigationBottom">
-        <p>
-            <img class="phoneImage" src="../image/telephone.png" alt="telephone">
-            Служба поддержки
-        </p>
-        <p>(+380) 0667620701</p>
-    </div>--%>
-<%--    <div >
-        <img src="../image/faceLogo.png" alt="logo"/>
-
-    </div>--%>
-
-</nav>
-<span onclick="openNav()" class="openButton">></span>
-<script src="../script/Menu.js"></script>
-</body>
+            <c:if test="${sessionScope.user == null || sessionScope.user.userRole eq UserRole.STUDENT}">
+                <li>
+                    <a href="${pageContext.request.contextPath}/Controller?command=getAvailableCourses"><fmt:message key="menu.coursePage"/></a>
+                    <hr>
+                </li>
+            </c:if>
+            <li>
+                <a href="${pageContext.request.contextPath}/Controller?command=aboutUsCommand"><fmt:message key="menu.aboutUsPage"/></a>
+                <hr>
+            </li>
+        </ul>
+    </nav>
+    <span onclick="openNav()" class="openButton">></span>
+    <script src="../script/Menu.js"></script>
+    </body>
 </html>

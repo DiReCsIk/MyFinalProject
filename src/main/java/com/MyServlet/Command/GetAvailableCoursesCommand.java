@@ -45,6 +45,7 @@ public class GetAvailableCoursesCommand implements Command {
             return Pages.MAIN_PAGE;
         }
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));
+        //TODO
         int rowCount = session.getAttribute("rowCount") == null ? 5 : (int) session.getAttribute("rowCount");
         TeacherService teacherService = new TeacherServiceImpl();
         CourseService courseService = new CourseServiceImpl();
@@ -68,7 +69,10 @@ public class GetAvailableCoursesCommand implements Command {
                 coursesNameList = (ArrayList<String>) courseService.selectAllCoursesName();
                 courseList = (ArrayList<Course>) courseService.selectAllStudentAvailableCourses(courseName);
             }
-            int courseCount = courseList.size();
+            int maxPage = (int) Math.ceil((double) courseList.size() / rowCount);
+            if (pageNumber > maxPage && maxPage != 0) {
+                pageNumber = maxPage;
+            }
             log.info("Sorting course list");
             courseList = (ArrayList<Course>) Sorter.sortCourseList(courseList, sortBy);
             ArrayList<Course> courseArrayList = new ArrayList<>(courseList.subList(rowCount * (pageNumber - 1), Math.min(courseList.size(), rowCount * (pageNumber - 1) + rowCount)));
@@ -80,7 +84,7 @@ public class GetAvailableCoursesCommand implements Command {
             request.setAttribute("coursesSelectName", coursesNameList);
             request.setAttribute("courseName", courseName);
             request.setAttribute("teacherData", teacherService.selectTeacherNameAndSurnameByID(teachersID));
-            request.setAttribute("maxPage", (int) Math.ceil((double) courseCount / rowCount));
+            request.setAttribute("maxPage", maxPage);
             request.setAttribute("pageNumber", pageNumber);
             request.setAttribute("courseType", "available");
             request.setAttribute("courseList", courseArrayList);

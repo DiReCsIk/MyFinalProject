@@ -46,6 +46,9 @@ public class GetTeachersInfoCommand implements Command {
         }
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));
         int rowCount = session.getAttribute("rowCount") == null ? 5 : (int) session.getAttribute("rowCount");
+        if(pageNumber <= 0){
+            pageNumber = 1;
+        }
         TeacherService teacherService = new TeacherServiceImpl();
         UserService userService = new UserServiceImpl();
         try {

@@ -29,10 +29,9 @@ public class GetCoursesCommand implements Command {
     /**
      * This command retrieves all information about in progress, finished, not started courses for student.
      *
-     * @param request - HttpServletRequest
+     * @param request  - HttpServletRequest
      * @param response - HttpServletResponse
-     *
-     * @throws CommandException - if trouble in service
+     * @throws CommandException    - if trouble in service
      * @throws ConnectionException - if trouble with db connection
      */
     @Override
@@ -47,9 +46,12 @@ public class GetCoursesCommand implements Command {
             log.info("Fail. User isn't valid");
             return Pages.MAIN_PAGE;
         }
-        String sortBy;
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));
+        String sortBy;
         int rowCount = session.getAttribute("rowCount") == null ? 5 : (int) session.getAttribute("rowCount");
+        if (pageNumber <= 0) {
+            pageNumber = 1;
+        }
         if (session.getAttribute("lang") != null && session.getAttribute("lang").equals("ru")) {
             sortBy = request.getParameter("sortBy") == null ? "Имя" : request.getParameter("sortBy");
         } else {
@@ -78,7 +80,10 @@ public class GetCoursesCommand implements Command {
             }
             log.info("Sorting course list");
             courseList = (ArrayList<Course>) Sorter.sortCourseList(courseList, sortBy);
-            int courseCount = courseList.size();
+            int maxPage = (int) Math.ceil((double) courseList.size() / rowCount);
+            if (pageNumber > maxPage && maxPage != 0) {
+                pageNumber = maxPage;
+            }
             ArrayList<Integer> coursesID = new ArrayList<>();
             ArrayList<Course> courseArrayList = new ArrayList<>(courseList.subList(rowCount * (pageNumber - 1), Math.min(courseList.size(), rowCount * (pageNumber - 1) + rowCount)));
             for (Course course : courseArrayList) {
@@ -93,7 +98,7 @@ public class GetCoursesCommand implements Command {
             }
             session.setAttribute("rowCount", rowCount);
             request.setAttribute("teacherData", teacherService.selectTeacherNameAndSurnameByID(teachersID));
-            request.setAttribute("maxPage", (int) Math.ceil((double) courseCount / rowCount));
+            request.setAttribute("maxPage", maxPage);
             request.setAttribute("pageNumber", pageNumber);
             request.setAttribute("courseType", courseType);
             request.setAttribute("courseList", courseArrayList);

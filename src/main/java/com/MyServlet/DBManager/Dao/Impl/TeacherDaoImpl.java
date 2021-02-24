@@ -39,6 +39,10 @@ public class TeacherDaoImpl extends AbstractDao<Teacher> implements TeacherDao {
             "(TEACHER_NAME, ' ', TEACHER_SURNAME) AS 'TEACHER_INFO', TEACHER_ID FROM TEACHER WHERE " +
             "TEACHER_ID IN (SELECT TEACHER_ID FROM COURSE INNER JOIN STUDENT_COURSE USING (COURSE_ID)" +
             " WHERE COURSE_END_DATE < '" + new java.sql.Date(new java.util.Date().getTime()) + "' AND STUDENT_ID = ?);";
+    private static final String SELECT_THREE_BEST_TEACHER = "SELECT TEACHER_ID, TEACHER_NAME, TEACHER_SURNAME, TEACHER_BIRTH_DATE," +
+            "COURSE_STUDENT_COUNT FROM TEACHER INNER JOIN COURSE USING " +
+            "(TEACHER_ID) ORDER BY COURSE_STUDENT_COUNT DESC LIMIT 3;";
+    private static final String SELECT_TEACHER_COURSE_COUNT = "SELECT COUNT(*) FROM COURSE WHERE TEACHER_ID = ?;";
 
     public TeacherDaoImpl(Connection connection) {
         super(connection);
@@ -72,6 +76,13 @@ public class TeacherDaoImpl extends AbstractDao<Teacher> implements TeacherDao {
     }
 
     @Override
+    public Map<String, ArrayList<String>> selectThreeBestTeachers() throws DAOException {
+        String[] listArgs = new String[]{"id", "name", "surName", "birthDay", "studentCount"};
+        return selectMapByStatement(SELECT_THREE_BEST_TEACHER,
+                listArgs);
+    }
+
+    @Override
     public List<Integer> selectTeacherStudentsID(int teacherID) throws DAOException {
         return selectIntegerListByStatement(SELECT_TEACHER_STUDENTS_ID,
                 String.valueOf(teacherID));
@@ -80,6 +91,12 @@ public class TeacherDaoImpl extends AbstractDao<Teacher> implements TeacherDao {
     @Override
     public int selectTeacherCourseID(int teacherID) throws DAOException {
         return selectIntByStatement(SELECT_TEACHER_COURSE_ID,
+                String.valueOf(teacherID));
+    }
+
+    @Override
+    public int selectTeacherCourseCount(int teacherID) throws DAOException {
+        return selectIntByStatement(SELECT_TEACHER_COURSE_COUNT,
                 String.valueOf(teacherID));
     }
 

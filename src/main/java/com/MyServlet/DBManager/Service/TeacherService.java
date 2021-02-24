@@ -2,6 +2,7 @@ package com.MyServlet.DBManager.Service;
 
 import com.MyServlet.Entity.Teacher;
 import com.MyServlet.Exception.ConnectionException;
+import com.MyServlet.Exception.DAOException;
 import com.MyServlet.Exception.ServiceException;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public interface TeacherService extends DefaultService<Teacher> {
 
     Map<String, ArrayList<String>> selectFinishedTeachersData(int studentID) throws ConnectionException, ServiceException;
 
+    Map<String, ArrayList<String>> selectThreeBestTeachers() throws ConnectionException, ServiceException;
+
     Map<String, ArrayList<String>> selectStudentsDataOnTeacherCourse(int teacherID, int pageNumber, int rowCount) throws ConnectionException, ServiceException;
 
     Map<String, ArrayList<String>> selectAllTeachersNameAndSurname() throws ConnectionException, ServiceException;
@@ -26,6 +29,9 @@ public interface TeacherService extends DefaultService<Teacher> {
     Teacher selectTeacherByUserID(int userID) throws ConnectionException, ServiceException;
 
     int selectTeacherCourseID(int teacherID) throws ConnectionException, ServiceException;
+
+    int selectTeacherCourseCount(int teacherID) throws ConnectionException, ServiceException;
+
 
     int getAllTeachersCount() throws ConnectionException, ServiceException;
 

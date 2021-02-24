@@ -49,6 +49,9 @@ public class GetTeacherFinishedCoursesCommand implements Command {
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));
         int rowCount = session.getAttribute("rowCount") == null ? 5 : (int) session.getAttribute("rowCount");
         int teacherID = Integer.parseInt(request.getParameter("teacherID"));
+        if(pageNumber <= 0){
+            pageNumber = 1;
+        }
         String sortBy = request.getParameter("sortBy") == null ? "Name" : request.getParameter("sortBy");
         CourseService courseService = new CourseServiceImpl();
         TeacherService teacherService = new TeacherServiceImpl();

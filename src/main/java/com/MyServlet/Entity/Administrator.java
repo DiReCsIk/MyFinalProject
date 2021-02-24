@@ -48,7 +48,7 @@ public class Administrator extends User implements Serializable {
 
     @Override
     public boolean equals(Object other) {
-        if (other == null || !(other instanceof Administrator)) {
+        if (!(other instanceof Administrator)) {
             return false;
         }
         if (this == other) {

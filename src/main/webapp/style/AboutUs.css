@@ -1,0 +1,63 @@
+.header {
+    cursor: default;
+    font-family: 'Rouge Script', cursive;
+    font-size: 76px;
+    font-weight: normal;
+    line-height: 48px;
+    text-align: center;
+    margin-top: 4%;
+    color: #eeeeee;
+}
+.proud{
+    color: #00adb5;
+    text-align: center;
+    font-size: 20px;
+}
+.img{
+    text-align: center;
+}
+table {
+    width: 60%;
+    margin-left: 18%;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif, serif;
+    font-size: 14px;
+    color: #eeeeee;
+    border-spacing: 0;
+    text-align: center;
+    margin-bottom: 4%;
+}
+
+tr:last-child td:first-child {
+    border-bottom-left-radius: 20px;
+}
+
+th {
+    height: 10vh;
+    background: #00adb5;
+    border-style: solid;
+    border-bottom: #00adb5;
+    border-width: 0 1px 1px 0;
+    text-shadow: 1px 1px 1px #393e46;
+    padding: 10px 20px;
+}
+
+td {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: #00adb5;
+}
+
+th:first-child {
+    border-top-left-radius: 20px;
+}
+
+th:last-child {
+    border-top-right-radius: 20px;
+}
+tr:last-child td:last-child {
+    border-bottom-right-radius: 20px;
+}
+td {
+    padding: 10px 20px;
+    background: #393e46;
+}

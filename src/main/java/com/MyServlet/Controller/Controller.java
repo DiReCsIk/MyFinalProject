@@ -36,8 +36,8 @@ public class Controller extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("In Controller doGet method");
         String commandName = request.getParameter("command");
-        Command command = CommandContainer.getCommand(commandName);
         try {
+            Command command = CommandContainer.getCommand(commandName);
             log.info("Try to execute " + commandName);
             String respPage = command.execute(request, response);
             log.info("Forwarding to " + respPage);
@@ -64,8 +64,8 @@ public class Controller extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.info("In Controller doPost method");
         String commandName = request.getParameter("command");
-        Command command = CommandContainer.getCommand(commandName);
         try {
+            Command command = CommandContainer.getCommand(commandName);
             log.info("Try to execute " + commandName);
             String respPage = command.execute(request, response);
             log.info("Redirecting to " + respPage);

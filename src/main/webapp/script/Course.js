@@ -38,8 +38,8 @@ window.onload = function () {
             break;
         case 'notStarted':
         case 'inProgress':
-            document.querySelector('.container').style.height = '76%';
-            document.querySelector('body').style.height = '111%';
+            document.querySelector('.container').style.height = '80%';
+            document.querySelector('body').style.height = '113%';
     }
 }
 

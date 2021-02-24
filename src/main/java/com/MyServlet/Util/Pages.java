@@ -22,4 +22,5 @@ public final class Pages {
     public static final String MY_DATA_PAGE = "page/myData.jsp";
     public static final String SIGN_UP_PAGE = "page/signUp.jsp";
     public static final String ERROR_404 = "/WEB-INF/error_404.jsp";
+    public static final String ABOUT_US = "/page/aboutUs.jsp";
 }

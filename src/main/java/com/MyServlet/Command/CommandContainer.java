@@ -1,5 +1,7 @@
 package com.MyServlet.Command;
 
+import com.MyServlet.Exception.CommandException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +36,7 @@ public class CommandContainer {
         commands.put("getTeacherFinishedCourse", new GetTeacherFinishedCoursesCommand());
         commands.put("getAvailableCourses", new GetAvailableCoursesCommand());
         commands.put("setStudentMarkCommand", new SetStudentMarkCommand());
+        commands.put("aboutUsCommand", new AboutUsCommand());
     }
     /**
      * Return command from command list
@@ -41,7 +44,11 @@ public class CommandContainer {
      * @param commandName - command name in list
      *
      */
-    public static Command getCommand(String commandName) {
+    public static Command getCommand(String commandName) throws CommandException {
+        Command command = commands.get(commandName);
+        if(command == null){
+            throw new CommandException();
+        }
         return commands.get(commandName);
     }
 }

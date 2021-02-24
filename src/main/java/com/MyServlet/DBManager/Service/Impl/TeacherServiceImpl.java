@@ -132,6 +132,22 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public int selectTeacherCourseCount(int teacherID) throws ConnectionException, ServiceException {
+        log.info("In TeacherServiceImpl (selectTeacherCourseCount, teacherID: " + teacherID + ")");
+        try (DBConnection dbConnection = DBConnection.createConnection()) {
+            log.info("Initializing TeacherDao");
+            TeacherDao teacherDao = new TeacherDaoImpl(dbConnection.getConnection());
+            log.info("Control transferring to Dao");
+            int courseCount = teacherDao.selectTeacherCourseCount(teacherID);
+            log.info("Closing connection");
+            return courseCount;
+        } catch (DAOException daoException) {
+            log.error("Error!", daoException);
+            throw new ServiceException(daoException.getMessage(), daoException);
+        }
+    }
+
+    @Override
     public Map<String, ArrayList<String>> selectStudentsDataOnTeacherCourse(int teacherID, int pageNumber, int rowCount) throws ConnectionException, ServiceException {
         log.info("In TeacherServiceImpl (selectTeacherNameAndSurnameByID, teacherID: " + teacherID + ", pageNumber: " +
                 pageNumber + ", rowCount: " + rowCount + ")");
@@ -257,6 +273,22 @@ public class TeacherServiceImpl implements TeacherService {
             TeacherDao teacherDao = new TeacherDaoImpl(dbConnection.getConnection());
             log.info("Control transferring to Dao");
             Map<String, ArrayList<String>> result = teacherDao.selectFinishedTeachersData(studentID);
+            log.info("Closing connection");
+            return result;
+        } catch (DAOException daoException) {
+            log.error("Error!", daoException);
+            throw new ServiceException(daoException.getMessage(), daoException);
+        }
+    }
+
+    @Override
+    public Map<String, ArrayList<String>> selectThreeBestTeachers() throws ConnectionException, ServiceException {
+        log.info("In TeacherServiceImpl (selectThreeBestTeachers)");
+        try (DBConnection dbConnection = DBConnection.createConnection()) {
+            log.info("Initializing TeacherDao");
+            TeacherDao teacherDao = new TeacherDaoImpl(dbConnection.getConnection());
+            log.info("Control transferring to Dao");
+            Map<String, ArrayList<String>> result = teacherDao.selectThreeBestTeachers();
             log.info("Closing connection");
             return result;
         } catch (DAOException daoException) {

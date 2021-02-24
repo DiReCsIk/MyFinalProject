@@ -48,6 +48,9 @@ public class GetAdministratorsInfoCommand implements Command {
         int pageNumber = request.getParameter("pageNumber") == null ? 1 : Integer.parseInt(request.getParameter("pageNumber"));
         int rowCount = session.getAttribute("rowCount") == null ? 5 : (int) session.getAttribute("rowCount");
         AdministratorService administratorService = new AdministratorServiceImpl();
+        if(pageNumber <= 0){
+            pageNumber = 1;
+        }
         UserService userService = new UserServiceImpl();
         try {
             log.info("Getting administrators info");
